@@ -1,0 +1,30 @@
+your-project-backend/
+  ├── backend/
+  |   |
+  |   controllers/
+  │   │   ├── authController.js
+  │   │   └── otherControllers.js
+  │   ├── models/
+  │   │   ├── user.js
+  │   │   └── otherModels.js
+  │   ├── routes/
+  │   │   ├── authRoutes.js
+  │   │   └── otherRoutes.js
+  │   ├── config/
+  │   │   └── config.js
+  │   ├── middleware/
+  │   │   └── authMiddleware.js
+  │   ├── server.js
+  ├── src/
+  │   ├── components/
+  │   └── app.js
+  ├── public/
+  │   ├── images/
+  │   ├── styles/
+  │   │   └── main.css
+  │   ├── index.html
+  │   └── otherStaticFiles
+  ├── node_modules/
+  ├── package.json
+  ├── package-lock.json
+  └── other configuration files

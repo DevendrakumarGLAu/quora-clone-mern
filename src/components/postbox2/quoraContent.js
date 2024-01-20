@@ -1,61 +1,44 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PostAnswerPopUP from "../postAnswer/answerPopUp/PostAnswerPopUP";
 import { Modal } from "react-responsive-modal";
-
+// import QAPostBox from "../content/QAPostBox/QAPostBox";
 
 function QuoraContent() {
   const [questions, setQuestions] = useState([]);
-  // const [answers, setAnswers] = useState({});
-  // const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
-  // const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
 
-  // const onOpenModal = (questionId) => {
-  //   setSelectedQuestionId(questionId);
-  //   setOpen(true);
-  // };
-const fetchQuestions = async () => {
-  try {
-    const response = await fetch(
-      "http://localhost:3001/api/GetALLquestions/get-questions"
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-
-      // Check if data is an array or a single question object
-      const questionsArray = Array.isArray(data) ? data : [data];
-
-      console.log("Fetched Questions Data:", questionsArray);
-
-      setQuestions(questionsArray);
-
-      console.log(
-        "Fetched Question IDs:",
-        questionsArray.map((q) => q.questionId)
+  const fetchQuestions = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/GetALLquestions/get-questions"
       );
-    } else {
-      console.error("Error fetching questions:", response.statusText);
+      if (response.ok) {
+        const data = await response.json();
+        const questionsArray = Array.isArray(data) ? data : [data];
+        setQuestions(questionsArray);
+      } else {
+        console.error("Error fetching questions:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching questions:", error.message);
     }
-  } catch (error) {
-    console.error("Error fetching questions:", error.message);
-  }
-};
+  };
 
-const onOpenModal = (questionId) => {
-  console.log("Selected Question ID:", questionId);
-  setSelectedQuestionId(questionId);
-  setOpen(true);
-};
+  const onOpenModal = (questionId) => {
+    console.log("Selected Question ID:", questionId);
+    setSelectedQuestionId(questionId);
+    setOpen(true);
+  };
 
-useEffect(() => {
-  fetchQuestions();
-}, []);
-
-
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
+// console.log("Questions in QuoraContent:", questions);
+// console.log(
+//   "Question IDs in QuoraContent:",
+//   questions.map((q) => q.questionId)
+// );
   return (
     <div>
       {questions.map((question, index) => (
@@ -66,7 +49,6 @@ useEffect(() => {
                 <h3 style={{ textAlign: "left" }}>
                   {index + 1}. {question.questionName}
                 </h3>
-                {/* {question._id} */}
               </div>
               <div
                 className="mt-0"
@@ -83,25 +65,18 @@ useEffect(() => {
                   day: "numeric",
                 })}
               </div>
-              <div class="d-flex justify-content-between">
+              <div className="d-flex justify-content-between">
                 <button
                   type="button"
-                  class="btn btn-light"
-                  // onClick={onOpenModal}
-                  onClick={() => {
-                    const questionId = question.questionId; // Update this line based on the structure
-                    console.log("Button Clicked. Question ID:", questionId);
-                    onOpenModal(questionId);
-                  }}
+                  className="btn btn-light"
+                  onClick={() => onOpenModal(question.questionId)}
                 >
-                  <i class="fa-regular fa-pen-to-square"></i>Answer
+                  <i className="fa-regular fa-pen-to-square"></i>Answer
                 </button>
-                <Modal open={open} onClose={onCloseModal} center>
+                <Modal open={open} onClose={() => setOpen(false)} center>
                   <PostAnswerPopUP
                     question={questions.find(
-                      (q) =>
-                        q.questionId === selectedQuestionId
-                        
+                      (q) => q.questionId === selectedQuestionId
                     )}
                     questionId={selectedQuestionId}
                   />
@@ -111,6 +86,7 @@ useEffect(() => {
           </div>
         </div>
       ))}
+      
     </div>
   );
 }

@@ -1,0 +1,28 @@
+.border-upvotes,.downvotes {
+  border: 1px solid #dee2e6; /* Border color, you can adjust it */
+  border-radius: 5px 0 0 5px; /* Adjust the border-radius as needed */
+  padding: 10px; /* Adjust padding as needed */
+  background-color: rgb(231, 132, 202);
+  color:#dee2e6;
+}
+.question-container {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid #dee2e6; */
+  border-radius: 0.25rem;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.answer-container {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid #dee2e6; */
+  border-radius: 0.25rem;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.answer-metadata {
+  justify-content: space-between;
+}

@@ -45,31 +45,20 @@ router.get("/get-questions", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-  // router.post("/answer-question/:questionId", async (req, res) => {
-  //   try {
-  //     const { questionId } = req.params;
-  //     const { answerText } = req.body;
+router.get("/GetQuestionIds", async (req, res) => {
+  try {
+    const questions = await Question.find();
 
-  //     const question = await Question.findById(questionId);
-  //     if (!question) {
-  //       return res.status(404).json({ error: "Question not found" });
-  //     }
+    if (!questions || questions.length === 0) {
+      return res.status(404).json({ error: "No questions found" });
+    }
 
-  //     const newAnswer = new Answer({
-  //       answerText,
-  //       question: question && question._id,
-  //       answeredBy: req.user && req.user._id, // Assuming you have user authentication middleware
-  //     });
+    const questionIds = questions.map((question) => question._id.toString());
 
-  //     await newAnswer.save();
-  //     question.answers.push(newAnswer._id);
-  //     await question.save();
-
-  //     res.status(200).json({ message: "Answer submitted successfully" });
-  //   } catch (error) {
-  //     console.error("Error submitting answer:", error);
-  //     res.status(500).json({ error: "Internal Server Error" });
-  //   }
-  // });
-
+    res.status(200).json({ questionIds });
+  } catch (error) {
+    console.error("Error fetching question IDs:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;

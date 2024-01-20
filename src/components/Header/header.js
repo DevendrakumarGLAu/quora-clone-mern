@@ -1,15 +1,12 @@
-// src/components/Header.js
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "react-responsive-modal/styles.css";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import Modal from "react-responsive-modal";
-import "react-responsive-modal/styles.css";
-import "react-quill/dist/quill.snow.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+// import "./Header.css"; // Import your custom CSS file for additional styling
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,42 +25,32 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-primary">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <a className="navbar-brand">Navbar</a>
+          <Link to="/quora" className="navbar-brand">
+            Quora
+          </Link>
           {/* Left side of the navbar */}
           <ul className="navbar-nav m-auto">
             <li className="nav-item active">
               <Link to="/quora" className="nav-link">
-                <i
-                  className="fa fa-home"
-                  aria-hidden="true"
-                  style={{ fontSize: "25px", color: "white" }}
-                ></i>
+                Home
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/sidebar">
-                <i
-                  className="fa-solid fa-people-group"
-                  style={{ fontSize: "25px", color: "white" }}
-                ></i>
-              </a>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/answer">
-                <i
-                  className="fa-regular fa-pen-to-square"
-                  style={{ fontSize: "25px", color: "white" }}></i>
+              <Link to="/sidebar" className="nav-link">
+                Spaces
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                <i
-                  className="fa-solid fa-bell"
-                  style={{ fontSize: "25px", color: "white" }}
-                ></i>
-              </a>
+              <Link to="/answer" className="nav-link">
+                Answer
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="#" className="nav-link">
+                Notifications
+              </Link>
             </li>
           </ul>
 
@@ -73,18 +60,21 @@ const Header = () => {
               <input
                 className="form-control me-2"
                 type="search"
-                placeholder="Search"
+                placeholder="Search Quora"
                 aria-label="Search"
               />
               <button
-                className="btn btn-outline-success search-Button"
+                className="btn btn-outline-light search-Button"
                 type="submit"
               >
                 Search
               </button>
             </form>
-            <li className="nav-item dropdown">
-              <button onClick={openModal} className="post_btnAnswer">
+            <li className="nav-item">
+              <button
+                onClick={openModal}
+                className="post_btnAnswer btn btn-primary"
+              >
                 Answer
               </button>
               <Modal open={isModalOpen} onClose={closeModal} center>
@@ -95,16 +85,16 @@ const Header = () => {
               <li className="nav-item">
                 <button
                   type="button"
-                  className="nav-link btn btn-danger"
+                  className="nav-link btn btn-outline-light"
                   onClick={handleLogout}
                 >
                   Logout
                 </button>
               </li>
             ) : (
-              <li className="nav-item  bg-danger">
-                <Link to="/" className="nav-link btn btn-danger">
-                  Log
+              <li className="nav-item">
+                <Link to="/" className="nav-link btn btn-outline-light">
+                  Log In
                 </Link>
               </li>
             )}

@@ -9,9 +9,9 @@ import Quora from './components/Quora.js';
 import Sidebar from './components/sidebar/Sidebar.js';
 import { AuthProvider } from "./components/Auth/authContext";
 import NotFound from './components/pageNotFound/NotFound';
-import QuoraContent from './components/postbox2/quoraContent.js';
+// import QuoraContent from './components/postbox2/quoraContent.js';
 import PostAnswer from './components/postAnswer/postAnswer.js';
-import Header from './components/Header/header.js';
+// import Header from './components/Header/header.js';
 
 function App() {
   return (

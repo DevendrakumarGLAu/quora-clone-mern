@@ -9,7 +9,7 @@ async function signup(req, res) {
           username,
           password,
           Qualifications,
-          Experience,
+          Working,
           Email,
           mobile,
         } = req.body;
@@ -18,7 +18,7 @@ async function signup(req, res) {
           username,
           password: hashedPassword,
           Qualifications,
-          Experience,
+          Working,
           Email,
           mobile,
         });
@@ -42,7 +42,7 @@ async function login(req, res) {
                 username: user.username,
                 email: user.Email, // Assuming 'Email' is the property name in your User model
                 qualifications: user.Qualifications,
-                experience: user.Experience,
+                Working: user.Working,
                 mobile: user.mobile,
               },
             });

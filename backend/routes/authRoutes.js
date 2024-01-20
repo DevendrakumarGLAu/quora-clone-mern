@@ -9,7 +9,7 @@ router.post(
         body('username').trim().isLength({ min: 3 }).withMessage('Username must be at least 3 characters'),
         body('password').isLength({ min: 4 }).withMessage('Password must be at least 4 characters'),
         body('Qualifications').isLength({ min: 3 }).withMessage('Qualifications must be at least 3 characters'),
-        body('Experience').isLength({ min: 3 }).withMessage('Experience must be at least 3 characters'),
+        body('Working').isLength({ min: 3 }).withMessage('Working must be at least 3 characters'),
         body('Email').isEmail().withMessage('Please enter a valid email address'),
         body('mobile').isMobilePhone().withMessage('Please enter a valid mobile number'),
     ],
@@ -26,7 +26,7 @@ router.post(
               username,
               password,
               Qualifications,
-              Experience,
+              Working,
               Email,
               mobile,
             } = req.body;
@@ -38,7 +38,7 @@ router.post(
             if (existingMobile) {
               return res.status(400).json({ error: "Mobile number already exists" });
             }
-            const newUser = new User({ username, password, Qualifications, Experience, Email, mobile });
+            const newUser = new User({ username, password, Qualifications, Working, Email, mobile });
             await newUser.save();
             res.status(201).json({ message: 'User registered successfully' });
         } catch (error) {
@@ -72,7 +72,7 @@ router.post(
             req.session.Email = user.email;
             req.session.Qualifications = user.qualifications;
             req.session.mobile= user.mobile;
-            req.session.Experience = user.Experience;
+            req.session.Working = user.Working;
             res.status(200).json({ message: 'Login successful'})
         } catch (error) {
             console.error(error);

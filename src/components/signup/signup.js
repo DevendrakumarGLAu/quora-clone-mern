@@ -7,7 +7,7 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [qualifications, setQualifications] = useState("");
-  const [Experience, setExperience] = useState("");
+  const [Working, setWorking] = useState("");
   const [Email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [message, setMessage] = useState("");
@@ -20,7 +20,7 @@ const Signup = () => {
         username,
         password,
         Qualifications: qualifications,
-        Experience: Experience,
+        Working: Working,
         Email: Email,
         mobile,
       });
@@ -29,7 +29,7 @@ const Signup = () => {
       setUsername("");
       setPassword("");
       setQualifications("");
-      setExperience("");
+      setWorking("");
       setEmail("");
       setMobile("");
       navigate("/");
@@ -81,15 +81,15 @@ const Signup = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="Experience" className="form-label">
-              Experience:
+            <label htmlFor="Working" className="form-label">
+              Working:
             </label>
             <input
               type="text"
               className="form-control"
-              id="Experience"
-              value={Experience}
-              onChange={(e) => setExperience(e.target.value)}
+              id="Working"
+              value={Working}
+              onChange={(e) => setWorking(e.target.value)}
             />
           </div>
           <div className="mb-3">

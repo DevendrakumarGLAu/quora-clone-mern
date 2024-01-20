@@ -62,7 +62,7 @@ const answerNavigate = () => {
           >
             <i class="fa-solid fa-pencil"></i>Post
           </span>
-          <Modal open={openPost} onClose={onClosePost} center>
+          <Modal open={openPost} onClose={onClosePost}  >
         <PostModalPopUP/>
       </Modal>
         </div>

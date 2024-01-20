@@ -6,6 +6,7 @@ const authRoutes = require('../backend/routes/authRoutes');
 const questionRoutes = require("./routes/questionRoutes");
 const session = require("express-session");
 const answerRoutes = require("./routes/answerRoutes");
+const postRoutes= require("./routes/postRoutes")
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -28,6 +29,7 @@ app.use("/api/answers", answerRoutes);
 // app.use('/api/auth', authRoutes);
 // app.use("/api/questions", questionRoutes);
 app.use("/api/GetALLquestions", questionRoutes);
+app.use("/api/posts", postRoutes);
 // app.use("/api/answers", answerRoutes);
 // app.use("/api", answerRoutes);
 // app.use("/api", questionRoutes);

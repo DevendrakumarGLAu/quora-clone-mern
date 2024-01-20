@@ -7,9 +7,9 @@ import books from "../content/postbox1/image/books.png";
 // import { useNavigate } from "react-router-dom";
 
 function AddQuestionModal() {
-    const [open, setOpen] = useState(false);
-    const onOpenModal = () => setOpen(true);
-    const onCloseModal = () => setOpen(false);
+    // const [open, setOpen] = useState(false);
+    // const onOpenModal = () => setOpen(true);
+    // const onCloseModal = () => setOpen(false);
     const [openPublic, setOpenPublic] = useState(false);
     const onOpenModalPublic = () => setOpenPublic(true);
     const onCloseModalPublic = () => setOpenPublic(false);
@@ -52,8 +52,6 @@ function AddQuestionModal() {
 
   return (
     <div>
-      {/* <div onClick={onOpenModal}> */}
-      {/* <Modal open={open} onClose={onCloseModal} center> */}
       <h3>Add Question</h3>
       <ul className="list-group mt-2">
         <h3>Tips on getting good answers quickly</h3>
@@ -116,18 +114,10 @@ function AddQuestionModal() {
         >
           Add question
         </button>
-        {/* <button
-          type="button"
-          className="btn btn-light mr-2"
-          style={{ marginRight: "10px" }}
-          onClose={onCloseModal}
-        >
-          Cancel
-        </button> */}
+        
       </div>
-      {/* </Modal> */}
+     
       </div>
-    // </div>
   );
 }
 

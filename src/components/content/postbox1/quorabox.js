@@ -7,12 +7,15 @@ import "./quorabox.css";
 import { useNavigate } from "react-router-dom";
 // import { useAuth } from "../../Auth/authContext";
 import AddQuestionModal from "../../AddQuestionModal/AddQuestionModal";
-// import { Link } from "react-router-dom"; 
+import PostModalPopUP from "./Post/postModalPopUP";
 
 function Quorabox() {
   const [open, setOpen] = useState(false);
   const onOpenModal = () => setOpen(true);
    const onCloseModal = () => setOpen(false);
+   const[openPost, setopenPost] = useState(false);
+   const onOpenPost = ()=>setopenPost(true);
+   const onClosePost =()=>setopenPost(false);
    const navigate = useNavigate();
 
 const answerNavigate = () => {
@@ -55,10 +58,13 @@ const answerNavigate = () => {
         <div className="">
           <span
             className="d-flex align-items-center justify-content-start"
-            onClick={onOpenModal}
+            onClick={onOpenPost}
           >
             <i class="fa-solid fa-pencil"></i>Post
           </span>
+          <Modal open={openPost} onClose={onClosePost} center>
+        <PostModalPopUP/>
+      </Modal>
         </div>
       </div>
     </div>

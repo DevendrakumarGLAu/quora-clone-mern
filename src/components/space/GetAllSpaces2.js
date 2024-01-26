@@ -26,12 +26,14 @@ function GetAllSpaces() {
 
   return (
     <div>
+      <h1>All Spaces</h1>
       {error ? (
         <div>Error: {error}</div>
       ) : (
         <ul>
           {spaces.map((space) => (
             <li key={space._id}>{space.name}</li>
+            // Add other space details as needed
           ))}
         </ul>
       )}

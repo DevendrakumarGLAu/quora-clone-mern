@@ -35,5 +35,26 @@ router.get("/getSpaces", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 })
+router.get("/getSpace/:id", async (req, res) => {
+  try {
+    const spaceId = req.params.id;
+    
+    if (!mongoose.Types.ObjectId.isValid(spaceId)) {
+      return res.status(400).json({ error: "Invalid space ID" });
+    }
+
+    const space = await Space.findById(spaceId);
+
+    if (!space) {
+      return res.status(404).json({ error: "Space not found" });
+    }
+
+    res.status(200).json(space);
+  } catch (error) {
+    console.error("Error fetching space by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 module.exports = router;

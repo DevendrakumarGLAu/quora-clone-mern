@@ -1,57 +1,43 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import { Link } from 'react-router-dom';
 
 function UserSpaceDetails() {
   // Placeholder data (replace with actual data)
-  const spaceDetails = {
-    name: "Your Space Name",
-    description: "This is a sample space description.",
-    members: 100, // Replace with actual number of members
-    posts: 50, // Replace with actual number of posts
-    topics: ["Topic 1", "Topic 2", "Topic 3"], // Replace with actual topics
-  };
+  const [spaces, setSpaces] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/getSpaces');
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const spacesData = await response.json();
+        setSpaces(spacesData);
+      } catch (error) {
+        console.error('Error fetching spaces:', error);
+        setError('Error fetching spaces');
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="container">
-      {/* Header */}
-      <header>
-        <h2>{spaceDetails.name}</h2>
-      </header>
-
-      {/* Space Details */}
-      <section>
-        <p>{spaceDetails.description}</p>
-
-        {/* Stats */}
-        <div className="space-stats">
-          <div>
-            <strong>{spaceDetails.members}</strong> Members
-          </div>
-          <div>
-            <strong>{spaceDetails.posts}</strong> Posts
-          </div>
-        </div>
-
-        {/* Topics */}
-        <div className="space-topics">
-          <strong>Topics:</strong>
-          <ul>
-            {spaceDetails.topics.map((topic, index) => (
-              <li key={index}>{topic}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Placeholder Content */}
-      <section>
-        <h3>Latest Posts</h3>
-        <div className="latest-posts">
-          {/* Display latest posts */}
-          {/* ... */}
-        </div>
-      </section>
+    <div>
+      <h1>Spaces</h1>
+      <ul>
+        {spaces.map((space) => (
+          <li key={space._id}>
+            <Link to={`/spaces/${space._id}`}>{space.name}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
 export default UserSpaceDetails;

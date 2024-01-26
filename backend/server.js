@@ -11,12 +11,12 @@ const spaceRoutes = require("./routes/spaceRoutes");
 // const searchRoutes = require("./routes/searchRoutes");
 
 const app = express();
-const PORT =  3002;
+const PORT =  3001;
 
 connectDB();  //connect to MongoDB
 app.use(
   session({
-    secret: "DevendraKumarSinghGlau", // Change this to a secure key
+    secret: "DevendraKumarSinghGlau", 
     resave: false,
     saveUninitialized: false,
   })

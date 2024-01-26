@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="position-fixed z-3 mt-0" style={{ width: "100%" }}>
+      <div className="position-fixed z-3 mt-0" style={{ width: "100%" ,boxShadow:"rgba(0, 30, 43, 0.1) 0px 4px 4px 0px"}}>
         <nav className="navbar navbar-expand-lg navbar-light bg-white ">
           <div className="container-fluid">
             <Link

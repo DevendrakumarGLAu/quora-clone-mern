@@ -2,29 +2,28 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import Sidebar from "../sidebar/Sidebar";
+import CreateSpace from "./CreateSpace/CreateSpace";
+import Header from "../Header/header";
+import Widget from "../Widget/Widget";
+
 
 
 function Space() {
   return (
     <div>
-      <div class="card mt-4">
-        <div class="card-body">
-          <div class="d-flex flex-column mb-3">
-            <div class="p-2">
-              {/* <li className="nav-item active"> */}
-              <Link
-                to="https://devendrakumarsspace26.quora.com/"
-                className="nav-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i class="fa fa-user-secret" aria-hidden="true"></i>
-              </Link>
-              {/* </li> */}
-            </div>
-            <div class="p-2">Flex item 1</div>
-            <div class="p-2">Flex item 2</div>
-            <div class="p-2">Flex item 3</div>
+      <Header />
+      <div class="d-flex justify-content-evenly">
+        {/* <div class="p-2"><Sidebar/></div> */}
+        <div class="d-flex flex-row mb-3">
+          <div class="p-2">
+            <Sidebar />
+          </div>
+          <div class="p-2">
+            <CreateSpace />
+          </div>
+          <div class="p-2">
+            <Widget />
           </div>
         </div>
       </div>

@@ -109,9 +109,7 @@ function QAPostBox() {
     await handleAnswerAction(answerId, "downvote");
   };
 
-  const handleComment = (answerId) => {
-    setCommentInput({ answerId, text: "" });
-  };
+  
 
   const handleShare = async (answerId) => {
     const shareType = prompt("Enter share type (public/private):");
@@ -120,11 +118,20 @@ function QAPostBox() {
     }
   };
 
+  const handleComment = (answerId) => {
+    setCommentInput({
+      isActive: true,
+      answerId,
+      text: "",
+    });
+  };
+
   const handleCommentSubmit = async () => {
     const { answerId, text } = commentInput;
     if (text) {
-      await handleAnswerAction(answerId, "comment", { commentText: text });
-      setCommentInput({ answerId: null, text: "" });
+      // Perform your comment submission logic here
+      console.log(`Comment submitted for answerId ${answerId}: ${text}`);
+      setCommentInput({ answerId: null, text: "", isActive: false });
     }
   };
 
@@ -138,7 +145,7 @@ function QAPostBox() {
                 <h3 className="card-title">{questionaa.questionName}</h3>
               </div>
               <div className="p-2">
-                <p className="card-text">
+                <p className="card-text text-danger">
                   {formatDateString(questionaa.createdAt)}
                 </p>
               </div>
@@ -147,15 +154,15 @@ function QAPostBox() {
               <div key={answer._id} className=" answer-container">
                 <div className="d-flex flex-row mb-3">
                   <div className="p-2">
-                    <p className="card-text">
-                      <small className="text-muted">
+                    <p className="card-text ">
+                      <small className="text-danger">
                         Answered by: {answer.answeredBy}
                       </small>
                     </p>
                   </div>
                   <div className="p-2">
-                    <p className="card-text">
-                      <small className="text-muted">
+                    <p className="card-text ">
+                      <small className="text-danger">
                         Created at: {formatDateString(answer.createdAt)}
                       </small>
                     </p>
@@ -164,7 +171,7 @@ function QAPostBox() {
                 <div className="d-flex flex-column mb-3">
                   <div className="p-2">
                     {" "}
-                    <p className="card-text">{answer.answerText}</p>
+                    <p className="card-text ">{answer.answerText}</p>
                   </div>
                 </div>
 
@@ -187,12 +194,32 @@ function QAPostBox() {
                       {answer.downvotes}
                     </p>
                   </div>
-                  {/* <div class="p-2">
-                    <p className="card-text">
+                  <div class="p-2">
+                    <p
+                      className="card-text"
+                      onClick={() => handleComment(answer._id)}
+                    >
                       <i class="fa-regular fa-comment"></i>
-                      {answer.comments}
                     </p>
-                  </div> */}
+                  </div>
+                  {commentInput.isActive &&
+                    commentInput.answerId === answer._id && (
+                      <div>
+                        <input
+                          type="text"
+                          value={commentInput.text}
+                          onChange={(e) =>
+                            setCommentInput({
+                              ...commentInput,
+                              text: e.target.value,
+                            })
+                          }
+                        />
+                        <button onClick={handleCommentSubmit}>
+                          Submit Comment
+                        </button>
+                      </div>
+                    )}
 
                   <div className="p-2">
                     <p

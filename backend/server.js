@@ -7,6 +7,8 @@ const questionRoutes = require("./routes/questionRoutes");
 const session = require("express-session");
 const answerRoutes = require("./routes/answerRoutes");
 const postRoutes= require("./routes/postRoutes")
+const spaceRoutes = require("./routes/spaceRoutes");
+// const searchRoutes = require("./routes/searchRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -26,13 +28,11 @@ app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/answers", answerRoutes);
-// app.use('/api/auth', authRoutes);
-// app.use("/api/questions", questionRoutes);
 app.use("/api/GetALLquestions", questionRoutes);
 app.use("/api/posts", postRoutes);
-// app.use("/api/answers", answerRoutes);
-// app.use("/api", answerRoutes);
-// app.use("/api", questionRoutes);
+app.use("/api/spaces", spaceRoutes);
+// app.use("/api", searchRoutes);
+// app.use("/api/posts/GetAllPosts", postRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -9,14 +9,13 @@ import Quora from './components/Quora.js';
 import Sidebar from './components/sidebar/Sidebar.js';
 import { AuthProvider } from "./components/Auth/authContext";
 import NotFound from './components/pageNotFound/NotFound';
-// import QuoraContent from './components/postbox2/quoraContent.js';
 import PostAnswer from './components/postAnswer/postAnswer.js';
-// import Header from './components/Header/header.js';
+import CreateSpace from "./components/space/CreateSpace/CreateSpace.js";
+import UserSpaceDetails from './components/space/userSpaceDetails/UserSpaceDetails.js';
 
 function App() {
   return (
     <AuthProvider>
-      
       <Router>
         <div>
           <Routes>
@@ -24,8 +23,11 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/quora" element={<Quora />} />
             <Route path="/sidebar" element={<Sidebar />} />
-            <Route path="/answer" element={<PostAnswer/>} />
+            <Route path="/answer" element={<PostAnswer />} />
+            {/* <Route path="/Space" element={<Space/>} /> */}
             {/* <Route path="/answer" element={<QuoraContent/>}/> */}
+            <Route path="/createSpace" element={<CreateSpace />} />
+            <Route path="/UserSpaceDetails/:id" element={<UserSpaceDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

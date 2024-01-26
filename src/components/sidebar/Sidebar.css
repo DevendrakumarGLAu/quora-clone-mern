@@ -1,7 +1,8 @@
 .sidebar {
   /* margin-top: 10px; */
+  position: fixed;
   margin-right: 10px;
   flex: 0.2;
-  margin-top: 23px;
+  /* margin-top: 80px; */
   width: max-content;
 }

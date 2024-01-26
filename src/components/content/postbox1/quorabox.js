@@ -10,6 +10,7 @@ import AddQuestionModal from "../../AddQuestionModal/AddQuestionModal";
 import PostModalPopUP from "./Post/postModalPopUP";
 
 function Quorabox() {
+  
   const [open, setOpen] = useState(false);
   const onOpenModal = () => setOpen(true);
    const onCloseModal = () => setOpen(false);
@@ -45,26 +46,32 @@ const answerNavigate = () => {
       </Modal>
       <div className="d-flex justify-content-around align-items-left">
         <div className=" border-end" onClick={onOpenModal}>
-          <span className="d-flex align-items-center justify-content-start">
+          <span
+            type="button"
+            className="d-flex align-items-center justify-content-start btn btn-light"
+          >
             <i class="fa-regular fa-circle-question"></i>Ask
           </span>
         </div>
         <div className=" border-end">
-            {/* this will navigate to the  src/components/postAnswer/postAnswer.js */}
-            <span className="d-flex align-items-center justify-content-start" onClick={answerNavigate}>
-              <i class="fa-regular fa-pen-to-square"></i>Answer
-            </span>
+          {/* this will navigate to the  src/components/postAnswer/postAnswer.js */}
+          <span
+            className="d-flex align-items-center justify-content-start btn btn-light"
+            onClick={answerNavigate}
+          >
+            <i class="fa-regular fa-pen-to-square"></i>Answer
+          </span>
         </div>
         <div className="">
           <span
-            className="d-flex align-items-center justify-content-start"
+            className="d-flex align-items-center justify-content-start btn btn-light"
             onClick={onOpenPost}
           >
             <i class="fa-solid fa-pencil"></i>Post
           </span>
-          <Modal open={openPost} onClose={onClosePost}  >
-        <PostModalPopUP/>
-      </Modal>
+          <Modal open={openPost} onClose={onClosePost}>
+            <PostModalPopUP />
+          </Modal>
         </div>
       </div>
     </div>

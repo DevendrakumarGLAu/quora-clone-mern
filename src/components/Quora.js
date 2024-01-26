@@ -13,8 +13,8 @@ function Quora() {
     <div>
       <Header/>
       <div>
-        <div className="container text-center">
-          <div className="row">
+        <div className="container text-center" >
+          <div className="row" style={{marginTop:"80px"}}>
             <div className="col">
               {/* <Space /> */}
               <Sidebar />

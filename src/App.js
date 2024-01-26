@@ -12,6 +12,7 @@ import NotFound from './components/pageNotFound/NotFound';
 import PostAnswer from './components/postAnswer/postAnswer.js';
 import CreateSpace from "./components/space/CreateSpace/CreateSpace.js";
 import UserSpaceDetails from './components/space/userSpaceDetails/UserSpaceDetails.js';
+import PostModalPopup from './components/content/postbox1/Post/postModalPopUP.js';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
             <Route path="/sidebar" element={<Sidebar />} />
             <Route path="/answer" element={<PostAnswer />} />
             {/* <Route path="/Space" element={<Space/>} /> */}
-            {/* <Route path="/answer" element={<QuoraContent/>}/> */}
+            <Route path="/PostModalPopUP" element={<PostModalPopup/>}/>
             <Route path="/createSpace" element={<CreateSpace />} />
             <Route path="/UserSpaceDetails/:id" element={<UserSpaceDetails />} />
             <Route path="*" element={<NotFound />} />

@@ -11,7 +11,7 @@ const spaceRoutes = require("./routes/spaceRoutes");
 // const searchRoutes = require("./routes/searchRoutes");
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT =  3002;
 
 connectDB();  //connect to MongoDB
 app.use(

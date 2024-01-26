@@ -34,11 +34,7 @@ function QuoraContent() {
   useEffect(() => {
     fetchQuestions();
   }, []);
-// console.log("Questions in QuoraContent:", questions);
-// console.log(
-//   "Question IDs in QuoraContent:",
-//   questions.map((q) => q.questionId)
-// );
+  
   return (
     <div>
       {questions.map((question, index) => (

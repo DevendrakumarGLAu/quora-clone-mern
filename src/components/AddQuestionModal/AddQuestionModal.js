@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import books from "../content/postbox1/image/books.png";
-// import { useNavigate } from "react-router-dom";
+import AllpopModal from "../AllPopModal/AllpopModal";
 
 function AddQuestionModal() {
     // const [open, setOpen] = useState(false);
@@ -52,7 +52,10 @@ function AddQuestionModal() {
 
   return (
     <div>
-      <h3>Add Question</h3>
+      {/* <h3>Add Question</h3> */}
+      <span class="border-bottom">
+        <AllpopModal/>
+      </span>
       <ul className="list-group mt-2">
         <h3>Tips on getting good answers quickly</h3>
         <li className="list-group-item">

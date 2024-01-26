@@ -1,13 +1,13 @@
 // src/components/postAnswer/answerPopUp/PostAnswerPopUP.js
 import React, { useState } from "react";
 import books from "./image/books.png";
-import {  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function PostAnswerPopUP({ question, questionId }) {
   const [answerText, setAnswerText] = useState("");
-  const[username,setusername]=useState("")
-  const[questionName,setquestionName]=useState("")
-  const Navigate= useNavigate();
+  const [username, setusername] = useState("");
+  const [questionName, setquestionName] = useState("");
+  const Navigate = useNavigate();
   const handlePostAnswer = async () => {
     try {
       const username = sessionStorage.getItem("username");
@@ -38,8 +38,8 @@ function PostAnswerPopUP({ question, questionId }) {
         setAnswerText("");
         setusername("");
         setquestionName("");
-        Navigate('/answer')
-        window.location.reload()
+        Navigate("/answer");
+        window.location.reload();
       } else {
         console.error("Error submitting answer:", response.statusText);
       }

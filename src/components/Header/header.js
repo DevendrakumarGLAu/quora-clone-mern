@@ -14,8 +14,12 @@ const Header = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn1 = localStorage.getItem("isLoggedIn")
+  console.log("loggin heder", isLoggedIn1)
   const handleLogout = () => {
-    // Perform logout logic here (e.g., clear authentication token, etc.)
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("username");
+    localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
     navigate("/");
   };
@@ -76,13 +80,13 @@ const Header = () => {
             <ul className="navbar-nav ml-auto">
               <form className="d-flex" role="search">
                 <input
-                  className="form-control me-2"
+                  className="form-control mr-2"
                   type="search"
                   placeholder="Search Quora"
                   aria-label="Search"
                 />
                 <button
-                  className="btn btn-outline-light search-Button"
+                  className="btn btn-outline-light search-Button mr-2"
                   type="submit"
                   style={{ color: "black" }}
                 >
@@ -100,11 +104,12 @@ const Header = () => {
                   <AllpopModal/>
                 </Modal>
               </li>
-              {isLoggedIn ? (
+              {isLoggedIn1 ? (
                 <li className="nav-item">
                   <button
                     type="button"
-                    className="nav-link btn btn-danger active mt-2"
+                    style={{ color: "white", marginLeft: "10px" }}
+                    className="nav-link btn btn-danger active mt-1"
                     aria-current="page"
                     onClick={handleLogout}
                   >
@@ -119,7 +124,7 @@ const Header = () => {
                     className="nav-link btn btn-danger active mt-1"
                     aria-current="page"
                   >
-                    Logout
+                    Login
                   </Link>
                 </li>
               )}

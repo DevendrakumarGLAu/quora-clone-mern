@@ -1,22 +1,28 @@
-//src/components/postAnswer/postAnswer.js
-import React from 'react'
+import React from 'react';
 import QuoraContent from '../postbox2/quoraContent';
 import Header from '../Header/header';
+import Sidebar from '../sidebar/Sidebar';
+import Widget from '../Widget/Widget';
 
 function PostAnswer() {
   return (
     <div>
-      <Header />
-      <div class="d-flex justify-content-around">
-        <div class="p-2">Flex item 2</div>
-
-        <div class="p-2">
-          <QuoraContent />
+      {/* <div className="container"> */}
+        <div className="row m-4">
+          <div className="col-md-2 d-none d-md-block">
+            <Sidebar/>
+          </div>
+  
+          <div className="col-md-8 col-12">
+            <QuoraContent />
+          </div>
+    
+          <div className="col-md-2 d-none d-md-block">
+            <Widget/>
+          </div>
         </div>
-
-        <div class="p-2">Flex item 3</div>
       </div>
-    </div>
+    // </div>
   );
 }
 

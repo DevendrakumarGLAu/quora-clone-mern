@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="position-fixed z-3 mt-0" style={{ width: "100%" ,boxShadow:"rgba(0, 30, 43, 0.1) 0px 4px 4px 0px"}}>
+      <div className="sticky-top z-3 mt-0" style={{ width: "100%" ,boxShadow:"rgba(0, 30, 43, 0.1) 0px 4px 4px 0px"}}>
         <nav className="navbar navbar-expand-lg navbar-light bg-white ">
           <div className="container-fluid">
             <Link
@@ -40,7 +40,7 @@ const Header = () => {
             <ul className="navbar-nav m-auto">
               <li className="nav-item active">
                 <Link
-                  to="/quora"
+                  to="/"
                   className="nav-link active active"
                   aria-current="page"
                 >
@@ -49,7 +49,7 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/sidebar"
+                  to="/Space"
                   className="nav-link active active"
                   aria-current="page"
                 >
@@ -114,7 +114,7 @@ const Header = () => {
               ) : (
                 <li className="nav-item">
                   <Link
-                    to="/"
+                    to="/login"
                     style={{ color: "white", marginLeft: "10px" }}
                     className="nav-link btn btn-danger active mt-1"
                     aria-current="page"

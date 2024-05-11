@@ -8,11 +8,12 @@ const session = require("express-session");
 const answerRoutes = require("./routes/answerRoutes");
 const postRoutes= require("./routes/postRoutes")
 const spaceRoutes = require("./routes/spaceRoutes");
+require('dotenv').config();
 // const searchRoutes = require("./routes/searchRoutes");
 
 const app = express();
-const PORT =  3001;
-
+const PORT = process.env.PORT || 3001;
+console.log(PORT)
 connectDB();  //connect to MongoDB
 app.use(
   session({

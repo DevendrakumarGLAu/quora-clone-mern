@@ -53,9 +53,9 @@ function GetUserSpace() {
                 </ol>
               </div>
             ) : (
-              <link to="/createSpace" className="text-left">
+              <Link to="/createSpace" className="text-left">
                 Create Space
-              </link>
+              </Link>
             )
           ) : (
             <p className="text-left">No spaces available.</p>

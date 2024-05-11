@@ -2,6 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 router.post(
     '/signup',
@@ -47,6 +48,7 @@ router.post(
         }
     }
 );
+const jwtSecret = 'DevendraKumarSinghGlau';
 router.post(
     '/login',
     [
@@ -67,13 +69,18 @@ router.post(
             if (password !== user.password) {
                 return res.status(400).json({ error: 'Invalid username or password' });
             }
+            const token = jwt.sign(
+                { username: user.username, email: user.email },
+                jwtSecret,
+                { expiresIn: '1h' } // Optional: token expiry time
+            );
             console.log(req.session);
             req.session.username = user.username;
             req.session.Email = user.email;
             req.session.Qualifications = user.qualifications;
             req.session.mobile= user.mobile;
             req.session.Working = user.Working;
-            res.status(200).json({ message: 'Login successful'})
+            res.status(200).json({ message: 'Login successful','token': token });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Internal server error' });

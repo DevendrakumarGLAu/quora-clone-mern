@@ -1,60 +1,55 @@
-// src/components/AddQuestionModal/AddQuestionModal.js
-
 import React, { useState } from "react";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import books from "../content/postbox1/image/books.png";
 import AllpopModal from "../AllPopModal/AllpopModal";
+import { useNavigate } from "react-router-dom";
 
 function AddQuestionModal() {
-    // const [open, setOpen] = useState(false);
-    // const onOpenModal = () => setOpen(true);
-    // const onCloseModal = () => setOpen(false);
-    const [openPublic, setOpenPublic] = useState(false);
-    const onOpenModalPublic = () => setOpenPublic(true);
-    const onCloseModalPublic = () => setOpenPublic(false);
-    const [question, setQuestion] = useState("");
-    // const Navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState("");
-    const handleAddQuestion = async () => {
-      try {
-        const questionName = question.trim();
-        const questionUrl = window.location.href;
-        if (!questionName) {
-          setErrorMessage("Question cannot be empty");
-          return;
-        }
-        const response = await fetch(
-          "http://localhost:3001/api/questions/submit-question",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              questionName,
-              questionUrl,
-              // askedBy: user,
-            }),
-          }
-        );
-        if (response.ok) {
-          console.log("Question submitted successfully");
-          // Navigate("/quora");
-          window.location.reload();
-        } else {
-          console.error("Error submitting question:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error submitting question:", error.message);
+  const [openPublic, setOpenPublic] = useState(false);
+  const [question, setQuestion] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
+  const handleAddQuestion = async () => {
+    try {
+      const questionName = question.trim();
+      const questionUrl = window.location.href;
+      if (!questionName) {
+        setErrorMessage("Question cannot be empty");
+        return;
       }
-    };
+      const response = await fetch(
+        "http://localhost:3001/api/questions/submit-question",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            questionName,
+            questionUrl,
+          }),
+        }
+      );
+      if (response.ok) {
+        console.log("Question submitted successfully");
+        window.location.reload();
+      } else {
+        console.error("Error submitting question:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error submitting question:", error.message);
+    }
+  };
+
+  const openModalPublic = () => setOpenPublic(true);
+  const closeModalPublic = () => setOpenPublic(false);
 
   return (
     <div>
-      {/* <h3>Add Question</h3> */}
-      <span class="border-bottom">
-        <AllpopModal/>
+      <span className="border-bottom">
+        <AllpopModal />
       </span>
       <ul className="list-group mt-2">
         <h3>Tips on getting good answers quickly</h3>
@@ -70,7 +65,11 @@ function AddQuestionModal() {
       </ul>
       <div className="d-flex flex-row mb-3">
         <div className="p-1">
-          <img src={books} alt="" style={{ width: "20px", height: "20px" }} />
+          <img
+            src={books}
+            alt=""
+            style={{ width: "20px", height: "20px" }}
+          />
         </div>
         <div className="p-1">
           <i className="fa-solid fa-caret-right"></i>
@@ -80,9 +79,9 @@ function AddQuestionModal() {
             <i className="fa-solid fa-user-group"></i>public
             <i
               className="fa-solid fa-caret-down"
-              onClick={onOpenModalPublic}
+              onClick={openModalPublic}
             ></i>
-            <Modal open={openPublic} onClose={onCloseModalPublic} center>
+            <Modal open={openPublic} onClose={closeModalPublic} center>
               <h3>
                 Public Others will see your identity alongside this question on
                 your profile and in their feeds. Limited Your identity will be
@@ -99,7 +98,7 @@ function AddQuestionModal() {
             rows="4"
             cols="100"
             placeholder='Start your question with "What", "How", "Why", etc.'
-            className="textareaModification"
+            className="textareaModification form-control"
             value={question}
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -109,7 +108,7 @@ function AddQuestionModal() {
           {errorMessage && <div className="text-danger">{errorMessage}</div>}
         </form>
       </div>
-      <div className="d-flex flex-row-reverse">
+      <div className="d-flex justify-content-end mt-2">
         <button
           type="button"
           className="btn btn-primary"
@@ -117,11 +116,9 @@ function AddQuestionModal() {
         >
           Add question
         </button>
-        
       </div>
-     
-      </div>
+    </div>
   );
 }
 
-export default AddQuestionModal
+export default AddQuestionModal;

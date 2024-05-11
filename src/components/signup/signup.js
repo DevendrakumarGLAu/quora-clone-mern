@@ -32,7 +32,7 @@ const Signup = () => {
       setWorking("");
       setEmail("");
       setMobile("");
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       setMessage("");
       setError(error.response.data.error);
@@ -127,7 +127,7 @@ const Signup = () => {
         {message && <p className="text-success mt-3">{message}</p>}
         {error && <p className="text-danger mt-3">{error}</p>}
         <p className="mt-3">
-          Already have an account? <Link to="/">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>

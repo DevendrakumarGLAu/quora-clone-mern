@@ -1,8 +1,8 @@
 // src/App.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import Header from './components/Header/header';
+import Header from './components/Header/header';
 import Login from './components/login/login';
 import Signup from './components/signup/signup';
 import Quora from './components/Quora.js';
@@ -13,19 +13,29 @@ import PostAnswer from './components/postAnswer/postAnswer.js';
 import CreateSpace from "./components/space/CreateSpace/CreateSpace.js";
 import UserSpaceDetails from './components/space/userSpaceDetails/UserSpaceDetails.js';
 import PostModalPopup from './components/content/postbox1/Post/postModalPopUP.js';
-
+import Space from './components/space/space.js';
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('username');
+    setIsLoggedIn(false);
+  };
+
   return (
     <AuthProvider>
       <Router>
         <div>
+          <Header/>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login/>} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/quora" element={<Quora />} />
-            <Route path="/sidebar" element={<Sidebar />} />
+            {/* <Route path="/quora" element={<Quora />} /> */}
+            <Route path="/" element={<Quora />} />
+            {/* <Route path="/sidebar" element={<Sidebar />} /> */}
             <Route path="/answer" element={<PostAnswer />} />
-            {/* <Route path="/Space" element={<Space/>} /> */}
+            <Route path="/Space" element={<Space/>} />
             <Route path="/PostModalPopUP" element={<PostModalPopup/>}/>
             <Route path="/createSpace" element={<CreateSpace />} />
             <Route path="/UserSpaceDetails/:id" element={<UserSpaceDetails />} />

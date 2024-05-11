@@ -136,10 +136,10 @@ function QAPostBox() {
   };
 
   return (
-    <div className="">
+    <div className="card">
       {questionsQA.map((questionaa, index) => (
         <div key={index} className="question-container">
-          <div className="question-details">
+          <div className="question-details mt-4">
             <div className="d-flex flex-row mb-3">
               <div className="p-2">
                 <h3 className="card-title">{questionaa.questionName}</h3>

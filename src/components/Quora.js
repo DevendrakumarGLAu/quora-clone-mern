@@ -11,19 +11,16 @@ function Quora() {
   return (
     // <div classNameName='quora'>
     <div>
-      <Header/>
       <div>
-        <div className="container text-center" >
-          <div className="row" style={{marginTop:"80px"}}>
-            <div className="col">
-              {/* <Space /> */}
+        <div className=" text-center m-4" >
+          <div className="row">
+            <div className="col-md-2 d-none d-md-block">
               <Sidebar />
             </div>
-            <div className="col">
+            <div className="col-md-8 col-12">
               <Content />
             </div>
-            <div className="col">
-              {/* <Advertisement /> */}
+            <div className="col-md-2 d-none d-md-block">
               <Widget />
             </div>
           </div>

@@ -1,41 +1,65 @@
 import React, { useState } from "react";
-// import ReactDOM from "react-dom";
-import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import books from "../postbox1/image/books.png";
-import "./quorabox.css";
-import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../../Auth/authContext";
+import "bootstrap/dist/css/bootstrap.min.css";
 import AddQuestionModal from "../../AddQuestionModal/AddQuestionModal";
 import PostModalPopUP from "./Post/postModalPopUP";
+import { useNavigate } from "react-router-dom";
 
 function Quorabox() {
-  
   const [open, setOpen] = useState(false);
-  const onOpenModal = () => setOpen(true);
-   const onCloseModal = () => setOpen(false);
-   const[openPost, setopenPost] = useState(false);
-   const onOpenPost = ()=>setopenPost(true);
-   const onClosePost =()=>setopenPost(false);
-   const navigate = useNavigate();
+  const [username, setUsername] = useState(sessionStorage.getItem("username")); // Get username from localStorage
+  const navigate = useNavigate();
 
-const answerNavigate = () => {
-  navigate("/answer");
-};
+  // const onOpenModal = () => setOpen(true);
+  const onOpenModal = () => {
+    if (username) { // Check if username is present
+      setOpen(true);
+    } else {
+      const shouldLogin = window.confirm("Please login to ask a question. Do you want to proceed to login?");
+    if (shouldLogin) {
+      navigate("/login");
+    }
+    }
+  };
+  const onCloseModal = () => setOpen(false);
+  const [openPost, setOpenPost] = useState(false);
+  // const onOpenPost = () => setOpenPost(true);
+  const onOpenPost = () => {
+    if (username) { // Check if username is present
+      setOpen(true);
+    } else {
+      const shouldLogin = window.confirm("Please login to post content. Do you want to proceed to login?");
+    if (shouldLogin) {
+      navigate("/login");
+    }
+    }
+  };
+  const onClosePost = () => setOpenPost(false);
 
-  
+
+  const answerNavigate = () => {
+    if(username){
+    navigate("/answer");
+    }
+    else{
+      const shouldLogin = window.confirm("Please login to answer. Do you want to proceed to login?");
+    if (shouldLogin) {
+      navigate("/login");
+    }
+    }
+  };
+
   return (
-    <div>
-      {/* <div class="card mt-4"> */}
-      {/* <div class="card-body"> */}
-      <div className="d-flex flex-row">
+    <div className="card">
+      <div className="card-body d-flex flex-row align-items-center">
         <div className="p-1">
           <img src={books} alt="" style={{ width: "30px", height: "30px" }} />
         </div>
-        <div class="input-group mb-3">
+        <div className="input-group mb-3">
           <input
             type="text"
-            class="form-control"
+            className="form-control p-1"
             placeholder="What do you want to ask or share?"
             onClick={onOpenModal}
           />
@@ -44,30 +68,24 @@ const answerNavigate = () => {
       <Modal open={open} onClose={onCloseModal} center>
         <AddQuestionModal />
       </Modal>
-      <div className="d-flex justify-content-around align-items-left">
-        <div className=" border-end" onClick={onOpenModal}>
-          <span
-            type="button"
-            className="d-flex align-items-center justify-content-start btn btn-light"
-          >
-            <i class="fa-regular fa-circle-question"></i>Ask
+      <div className="card-footer d-flex justify-content-around">
+        <div className=" mr-auto border-end" onClick={onOpenModal}>
+          <span className="btn btn-success" role="button">
+            <i className="far fa-circle"></i> Ask
           </span>
         </div>
-        <div className=" border-end">
-          {/* this will navigate to the  src/components/postAnswer/postAnswer.js */}
-          <span
-            className="d-flex align-items-center justify-content-start btn btn-light"
+        <div className="mr-auto border-end">
+          <button
+            className="btn btn-success"
+            role="button"
             onClick={answerNavigate}
           >
-            <i class="fa-regular fa-pen-to-square"></i>Answer
-          </span>
+            <i className="far fa-edit"></i> Answer
+          </button>
         </div>
-        <div className="">
-          <span
-            className="d-flex align-items-center justify-content-start btn btn-light"
-            onClick={onOpenPost}
-          >
-            <i class="fa-solid fa-pencil"></i>Post
+        <div>
+          <span className="btn btn-success" role="button" onClick={onOpenPost}>
+            <i className="fas fa-pencil-alt"></i> Post
           </span>
           <Modal open={openPost} onClose={onClosePost}>
             <PostModalPopUP />
@@ -75,7 +93,6 @@ const answerNavigate = () => {
         </div>
       </div>
     </div>
-    // </div>
   );
 }
 

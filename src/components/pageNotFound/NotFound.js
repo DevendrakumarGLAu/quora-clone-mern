@@ -17,7 +17,7 @@ const NotFound = () => {
       <p className="lead">
         The page you are looking for might be in another universe.
       </p>
-      <Link to="/" className="btn btn-primary">
+      <Link to="/login" className="btn btn-primary">
         Login
       </Link>
     </div>

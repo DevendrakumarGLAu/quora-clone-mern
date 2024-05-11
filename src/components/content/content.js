@@ -7,25 +7,16 @@ import GetPostData from "./postbox1/Post/GetPostData/GetPostData";
 function Content() {
   return (
     <div>
-      <div className="card" style={{ width: "40rem" }}>
-        <div className="card-body">
-          <div className="d-flex flex-column">
-            <div className="">
-              <Quorabox />
-            </div>
-          </div>
-        </div>
+      <div className="row">
+        <div className="col-md-12"><Quorabox /></div>
+        <div className="col-md-12"><GetPostData /></div>
+        <div className="col-md-12"><QAPostBox /></div>
       </div>
-      <GetPostData />
-      <div className="card mt-4" style={{ width: "40rem" }}>
-        <div className="card-body">
-          <div className="d-flex flex-column">
-            <div className="p-2">
-              <QAPostBox />
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      
+      {/* <div className="mt-4">
+        
+      </div> */}
     </div>
   );
 }

@@ -49,7 +49,7 @@ function PostModalPopup() {
 
   return (
     <div>
-      <div className="container d-flex justify-content-between">
+      <div className="container d-flex justify-content-around">
         <div className="row">
           <div className="col-md-6">Add Question</div>
           <div className="col-md-6">Create Post</div>

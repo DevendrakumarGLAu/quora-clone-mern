@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import PostAnswerPopUP from "../postAnswer/answerPopUp/PostAnswerPopUP";
 import { Modal } from "react-responsive-modal";
-// import QAPostBox from "../content/QAPostBox/QAPostBox";
+import "react-responsive-modal/styles.css";
+import { useNavigate } from "react-router-dom";
 
 function QuoraContent() {
   const [questions, setQuestions] = useState([]);
-  const [open, setOpen] = useState(false);
+  // const navigate = useNavigate();
+  const [username, setUsername] = useState(sessionStorage.getItem("username"));
+  const [open, setOpen] = useState(false); 
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
 
   const fetchQuestions = async () => {
@@ -15,8 +18,7 @@ function QuoraContent() {
       );
       if (response.ok) {
         const data = await response.json();
-        const questionsArray = Array.isArray(data) ? data : [data];
-        setQuestions(questionsArray);
+        setQuestions(Array.isArray(data) ? data : [data]);
       } else {
         console.error("Error fetching questions:", response.statusText);
       }
@@ -26,7 +28,6 @@ function QuoraContent() {
   };
 
   const onOpenModal = (questionId) => {
-    console.log("Selected Question ID:", questionId);
     setSelectedQuestionId(questionId);
     setOpen(true);
   };
@@ -34,40 +35,32 @@ function QuoraContent() {
   useEffect(() => {
     fetchQuestions();
   }, []);
-  
+
   return (
-    <div>
+    <div className="">
       {questions.map((question, index) => (
         <div key={index} className="card mt-2">
           <div className="card-body">
-            <div className="d-flex flex-column mb-3">
-              <div className="p-2" style={{ marginLeft: "2px" }}>
-                <h3 style={{ textAlign: "left" }}>
-                  {index + 1}. {question.questionName}
-                </h3>
+            <div className="d-flex flex-column">
+              <div className="p-2">
+                <h3>{index + 1}. {question.questionName}</h3>
               </div>
-              <div
-                className="mt-0"
-                style={{
-                  textAlign: "left",
-                  border: "1px solid gray",
-                  borderRadius: "5px",
-                  width: "max-content",
-                }}
-              >
-                {new Date(question.createdAt).toLocaleDateString("en-UK", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
+              <div className="mt-2">
+                <small className="border p-1">
+                  {new Date(question.createdAt).toLocaleDateString("en-UK", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </small>
               </div>
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-between align-items-center mt-2">
                 <button
                   type="button"
-                  className="btn btn-light"
+                  className="btn btn-success"
                   onClick={() => onOpenModal(question.questionId)}
                 >
-                  <i className="fa-regular fa-pen-to-square"></i>Answer
+                  <i className="far fa-edit"></i> Answer
                 </button>
                 <Modal open={open} onClose={() => setOpen(false)} center>
                   <PostAnswerPopUP
@@ -82,7 +75,6 @@ function QuoraContent() {
           </div>
         </div>
       ))}
-      
     </div>
   );
 }

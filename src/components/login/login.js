@@ -1,6 +1,6 @@
 // src/components/Login.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -12,24 +12,31 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogin = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:3001/api/auth/login",
-          { username, password, },
-        );
-        console.log(response);
-        const token = response.data.token;
-        localStorage.setItem("token", token);
-        
-        sessionStorage.setItem("username", username);
-        navigate("/quora");
-      } catch (error) {
-        console.error(error.response.data.error);
-        setError("Invalid username or password");
-      }
+        try {
+            const response = await axios.post(
+                "http://localhost:3001/api/auth/login",
+                { username, password, },
+            );
+            // console.log(response);
+            const token = response.data.token;
+            localStorage.setItem("token", token);
+            localStorage.setItem("isLoggedIn", true);
+            sessionStorage.setItem("username", username);
+            setIsLoggedIn(true);
+            console.log(isLoggedIn);
+            navigate("/");
+        } catch (error) {
+            console.error(error.response.data.error);
+            setError("Invalid username or password");
+        }
     };
+    useEffect(() => {
+        console.log(isLoggedIn);
+    }, [isLoggedIn]);
+
 
     return (
         <div className="container d-flex align-items-center justify-content-center vh-100">
@@ -57,9 +64,9 @@ const Login = () => {
                     Login
                 </button>
                 {error && <p className="text-danger mt-3">{error}</p>}
-                <p className="mt-3">
+                <div className="mt-3">
                     Don't have an account? <Link to="/signup">Sign up</Link>
-                </p>
+                </div>
             </div>
         </div>
     );

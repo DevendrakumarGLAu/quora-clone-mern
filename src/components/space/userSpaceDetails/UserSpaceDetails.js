@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 import { Link } from 'react-router-dom';
-
+import image from '../../images/banner.jpg'
 function UserSpaceDetails() {
   // Placeholder data (replace with actual data)
   const [spaces, setSpaces] = useState([]);
@@ -28,6 +28,8 @@ function UserSpaceDetails() {
 
   return (
     <div>
+      <img src={image} alt="Your Image" className="img-fluid" />
+
       <h1>Spaces</h1>
       <ul>
         {spaces.map((space) => (

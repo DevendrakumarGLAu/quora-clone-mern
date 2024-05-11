@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import image from '../images/banner.jpg'
 function GetUserSpace() {
   const [userSpaces, setUserSpaces] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

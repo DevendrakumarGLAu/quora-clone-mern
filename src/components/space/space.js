@@ -3,9 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Sidebar from "../sidebar/Sidebar";
-import CreateSpace from "./CreateSpace/CreateSpace";
-import Header from "../Header/header";
+// import CreateSpace from "./CreateSpace/CreateSpace";
+// import Header from "../Header/header";
 import Widget from "../Widget/Widget";
+// import GetAllSpaces from "./GetAllSpaces";
+import GetUserSpace from "./GetUserSpace";
 
 
 
@@ -13,17 +15,18 @@ function Space() {
   return (
     <div>
       <div>
-        <div className="m-4" >
+        <div className="" >
           <div className="row">
-            <div className="col-md-2 d-none d-md-block">
+            {/* <div className="col-md-2 d-none d-md-block">
             <Sidebar />
+            </div> */}
+            <div className="col-md-12 col-12">
+            {/* <CreateSpace /> */}
+            <GetUserSpace/>
             </div>
-            <div className="col-md-8 col-12">
-            <CreateSpace />
-            </div>
-            <div className="col-md-2 d-none d-md-block">
+            {/* <div className="col-md-2 d-none d-md-block">
               <Widget />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

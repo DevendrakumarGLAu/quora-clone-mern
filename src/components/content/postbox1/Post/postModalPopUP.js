@@ -1,51 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import books from "../image/books.png";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
 
-function PostModalPopup() {
-  const [content, setContent] = useState("");
+function PostModalPopup({ content = "", editMode = false, postId }) {
+  const [modalContent, setModalContent] = useState(content);
   const [image, setImage] = useState(null);
   const Navigate = useNavigate();
+  const handleFileSelect = (event) => {
+    // Handle file selection logic here
+  };
 
   const postContent = async () => {
     try {
       const username = sessionStorage.getItem("username");
-      const imageData = image;
       if (!username) {
         console.error("Username not found");
         return;
       }
-      if (!content.trim()) {
+      if (!modalContent.trim()) {
         console.error("Content is empty");
         return;
       }
-      const response = await fetch(
-        "http://localhost:3001/api/posts/postContent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            content,
-            // image: imageData,
-          }),
-        }
-      );
+      let url = "http://localhost:3001/api/posts/postContent";
+      let method = "POST";
+      if (editMode) {
+        console.log("edit post id", postId);
+        url = `http://localhost:3001/api/posts/updatePost/${postId}`;
+        method = "PUT";
+      }
+      const body = {
+        username,
+        content: modalContent,
+      };
+
+      if (editMode) {
+        body.postId = postId;
+      }
+      console.log("URL:", modalContent);
+      console.log("Request Body:", body);
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+        
+      });
+      console.log("response",response)
       if (response.ok) {
-        console.log("Post created successfully");
-        window.location.reload();
+        alert("Post created/updated successfully");
+        // window.location.reload();
         // Navigate("/quora");
       } else {
-        console.error("Error creating post");
+        console.error("Error creating/updating post");
       }
     } catch (error) {
-      console.error("Error creating post:", error);
+      console.error("Error creating/updating post:", error);
     }
   };
+  
+
+  useEffect(() => {
+    console.log("Content prop in PostModalPopup:", content);
+    setModalContent(content); // Initialize modalContent with content prop
+  }, [content]);
+
+  useEffect(() => {
+    console.log("Modal content state:", modalContent);
+  }, [modalContent]);
 
   return (
     <div>
@@ -67,7 +91,9 @@ function PostModalPopup() {
               <div className="">
                 <i className="fa-solid fa-caret-right"></i>
               </div>
-              <div className="p-1">{sessionStorage.getItem("username")}</div>
+              <div className="p-1">
+                {sessionStorage.getItem("username")}
+              </div>
             </div>
           </div>
           {/* <div className="col-6">{sessionStorage.getItem("working")}</div> */}
@@ -77,17 +103,25 @@ function PostModalPopup() {
         <ReactQuill
           style={{ width: "600px", height: "300px" }}
           theme="snow"
-          value={content}
-          onChange={(value) => setContent(value)}
+          value={modalContent}
+          onChange={(value) => setModalContent(value)}
         />
       </div>
-      <input type="file" accept="image/*" onchange="handleFileSelect(event)" />
-      <div class="d-flex justify-content-end mt-5">
-        <button type="button" class="btn btn-danger mt-3 mx-2">
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => handleFileSelect(e)}
+      />
+      <div className="d-flex justify-content-end mt-5">
+        <button type="button" className="btn btn-danger mt-3 mx-2">
           Cancel
         </button>
-        <button type="button" class="btn btn-primary" onClick={postContent}>
-          Add Post
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={postContent}
+        >
+          {editMode ? "Update Post" : "Add Post"}
         </button>
       </div>
     </div>

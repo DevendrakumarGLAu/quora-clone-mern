@@ -194,12 +194,12 @@ function QAPostBox() {
                       {answer.downvotes}
                     </p>
                   </div>
-                  <div class="p-2">
+                  <div className="p-2">
                     <p
                       className="card-text"
                       onClick={() => handleComment(answer._id)}
                     >
-                      <i class="fa-regular fa-comment"></i>
+                      <i className="fa-regular fa-comment"></i>
                     </p>
                   </div>
                   {commentInput.isActive &&

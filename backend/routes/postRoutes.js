@@ -27,16 +27,16 @@ router.post("/postContent", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 router.get("/getAllPosts", async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({ createdAt: -1 }); // Sort by createdAt field in descending order
     res.status(200).json(posts);
   } catch (error) {
     console.error("Error fetching posts:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 router.get("/getPostById/:postId", async (req, res) => {
   try {
@@ -65,6 +65,24 @@ router.put("/updatePost/:postId", async (req, res) => {
     res.status(200).json({ message: "Post updated successfully" });
   } catch (error) {
     console.error("Error updating post:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// router.delete("deletePost/:postId", async (req, res) => {
+  router.delete("/deletePost/:postId", async (req, res) => {
+  try{
+    const postId = req.params.postId;
+    const post = await Post.findById(postId);
+    if(!post){
+      return res.status(404).json({ message: "Post not found"
+       });
+    }
+    await Post.deleteOne({ _id: postId });
+    res.status(200).json({ message: "Post deleted successfully"
+     });
+  } catch (error) {
+    console.error("Error deleting post:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

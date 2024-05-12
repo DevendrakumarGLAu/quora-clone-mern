@@ -12,63 +12,69 @@ function PostModalPopup({ content = "", editMode = false, postId }) {
     // Handle file selection logic here
   };
 
-  const postContent = async () => {
-    try {
-      const username = sessionStorage.getItem("username");
-      if (!username) {
-        console.error("Username not found");
-        return;
-      }
-      if (!modalContent.trim()) {
-        console.error("Content is empty");
-        return;
-      }
-      let url = "http://localhost:3001/api/posts/postContent";
-      let method = "POST";
-      if (editMode) {
-        console.log("edit post id", postId);
-        url = `http://localhost:3001/api/posts/updatePost/${postId}`;
-        method = "PUT";
-      }
-      const body = {
+ const postContent = async () => {
+  try {
+    const username = sessionStorage.getItem("username");
+    if (!username) {
+      console.error("Username not found");
+      return;
+    }
+    if (!modalContent.trim()) {
+      console.error("Content is empty");
+      return;
+    }
+    
+    let url, method, body;
+
+    if (editMode) {
+      console.log("edit post id", postId);
+      url = `http://localhost:3001/api/posts/updatePost/${postId}`;
+      method = "PUT";
+      body = {
+        postId: postId,
         username,
         content: modalContent,
       };
-
-      if (editMode) {
-        body.postId = postId;
-      }
-      console.log("URL:", modalContent);
-      console.log("Request Body:", body);
-      const response = await fetch(url, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-        
-      });
-      console.log("response",response)
-      if (response.ok) {
-        alert("Post created/updated successfully");
-        // window.location.reload();
-        // Navigate("/quora");
-      } else {
-        console.error("Error creating/updating post");
-      }
-    } catch (error) {
-      console.error("Error creating/updating post:", error);
+    } else {
+       url = "http://localhost:3001/api/posts/postContent";
+       method = "POST";
+       body = {
+        username,
+        content: modalContent,
+       };
     }
-  };
+
+    // console.log("URL:", url);
+    // console.log("Request Body:", body);
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    // console.log("response", response);
+    if (response.ok) {
+      // alert("Post created/updated successfully");
+      window.location.reload();
+      // Navigate("/");
+    } else {
+      console.error("Error creating/updating post");
+    }
+  } catch (error) {
+    console.error("Error creating/updating post:", error);
+  }
+};
+
   
 
   useEffect(() => {
-    console.log("Content prop in PostModalPopup:", content);
+    // console.log("Content prop in PostModalPopup:", content);
     setModalContent(content); // Initialize modalContent with content prop
   }, [content]);
 
   useEffect(() => {
-    console.log("Modal content state:", modalContent);
+    // console.log("Modal content state:", modalContent);
   }, [modalContent]);
 
   return (
@@ -113,7 +119,7 @@ function PostModalPopup({ content = "", editMode = false, postId }) {
         onChange={(e) => handleFileSelect(e)}
       />
       <div className="d-flex justify-content-end mt-5">
-        <button type="button" className="btn btn-danger mt-3 mx-2">
+        <button type="button" className="btn btn-danger mt-3 mx-2" onClick={() => Navigate("/")}>
           Cancel
         </button>
         <button

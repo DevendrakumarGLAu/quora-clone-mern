@@ -8,45 +8,30 @@ import { useNavigate } from "react-router-dom";
 
 function Quorabox() {
   const [open, setOpen] = useState(false);
-  const [username, setUsername] = useState(sessionStorage.getItem("username")); // Get username from localStorage
+  const [username, setUsername] = useState(sessionStorage.getItem("username"));
   const navigate = useNavigate();
 
-  // const onOpenModal = () => setOpen(true);
   const onOpenModal = () => {
-    if (username) { // Check if username is present
-      setOpen(true);
-    } else {
-      const shouldLogin = window.confirm("Please login to ask a question. Do you want to proceed to login?");
-    if (shouldLogin) {
-      navigate("/login");
-    }
-    }
-  };
-  const onCloseModal = () => setOpen(false);
-  const [openPost, setOpenPost] = useState(false);
-  // const onOpenPost = () => setOpenPost(true);
-  const onOpenPost = () => {
-    if (username) { // Check if username is present
+    if (username) {
       setOpen(true);
     } else {
       const shouldLogin = window.confirm("Please login to post content. Do you want to proceed to login?");
-    if (shouldLogin) {
-      navigate("/login");
-    }
+      if (shouldLogin) {
+        navigate("/login");
+      }
     }
   };
-  const onClosePost = () => setOpenPost(false);
 
+  const onCloseModal = () => setOpen(false);
 
   const answerNavigate = () => {
-    if(username){
-    navigate("/answer");
-    }
-    else{
+    if (username) {
+      navigate("/answer");
+    } else {
       const shouldLogin = window.confirm("Please login to answer. Do you want to proceed to login?");
-    if (shouldLogin) {
-      navigate("/login");
-    }
+      if (shouldLogin) {
+        navigate("/login");
+      }
     }
   };
 
@@ -66,7 +51,7 @@ function Quorabox() {
         </div>
       </div>
       <Modal open={open} onClose={onCloseModal} center>
-        <AddQuestionModal />
+        <PostModalPopUP />
       </Modal>
       <div className="card-footer d-flex justify-content-around">
         <div className=" mr-auto border-end" onClick={onOpenModal}>
@@ -84,12 +69,9 @@ function Quorabox() {
           </button>
         </div>
         <div>
-          <span className="btn btn-success" role="button" onClick={onOpenPost}>
+          <span className="btn btn-success" role="button" onClick={onOpenModal}>
             <i className="fas fa-pencil-alt"></i> Post
           </span>
-          <Modal open={openPost} onClose={onClosePost}>
-            <PostModalPopUP />
-          </Modal>
         </div>
       </div>
     </div>

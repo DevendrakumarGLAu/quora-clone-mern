@@ -7,7 +7,10 @@ function GetUserSpace() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/spaces/getSpaces")
+
+    fetch(
+      "http://localhost:3001/api/spaces/getSpaces"
+    )
       .then((response) => response.json())
       .then((data) => {
         setUserSpaces(data);

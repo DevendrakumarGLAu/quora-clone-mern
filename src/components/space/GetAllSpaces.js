@@ -7,7 +7,9 @@ function GetAllSpaces() {
   useEffect(() => {
     const fetchSpaces = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/spaces/getSpaces');
+        const response = await fetch(
+          'http://localhost:3001/api/spaces/getSpaces'
+        );
 
         if (!response.ok) {
           throw new Error('Network response was not ok');

@@ -16,7 +16,9 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      await axios.post("http://localhost:3001/api/auth/signup", {
+      await axios.post(
+        "http://localhost:3001/api/auth/signup", 
+        {
         username,
         password,
         Qualifications: qualifications,

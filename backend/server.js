@@ -10,10 +10,10 @@ const postRoutes= require("./routes/postRoutes")
 const spaceRoutes = require("./routes/spaceRoutes");
 require('dotenv').config();
 // const searchRoutes = require("./routes/searchRoutes");
-
+console.log(process.env);
 const app = express();
-const PORT = process.env.PORT || 3001;
-console.log(PORT)
+const PORT = process.env.PORT || 3001; // Default to 3001 if PORT is not defined in the environment
+console.log(PORT);
 connectDB();  //connect to MongoDB
 app.use(
   session({

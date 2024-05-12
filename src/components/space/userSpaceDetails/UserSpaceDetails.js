@@ -9,7 +9,9 @@ function UserSpaceDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/getSpaces');
+        const response = await fetch(
+          'http://localhost:3001/api/getSpaces'
+        );
 
         if (!response.ok) {
           throw new Error('Network response was not ok');

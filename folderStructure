@@ -24,6 +24,7 @@ your-project-backend/
   │   │   └── main.css
   │   ├── index.html
   │   └── otherStaticFiles
+  ├── .env
   ├── node_modules/
   ├── package.json
   ├── package-lock.json

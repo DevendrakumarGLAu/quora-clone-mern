@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const User = require('../models/user');
@@ -49,6 +50,14 @@ router.post(
     }
 );
 const jwtSecret = 'DevendraKumarSinghGlau';
+router.use(session({
+    secret: jwtSecret, // Change this to your actual secret key
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600000 // 1 hour (in milliseconds)
+    }
+  }));
 router.post(
     '/login',
     [

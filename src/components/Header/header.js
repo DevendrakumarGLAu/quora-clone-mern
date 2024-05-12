@@ -13,15 +13,15 @@ const Header = () => {
   const navigate = useNavigate();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const isLoggedIn1 = localStorage.getItem("isLoggedIn")
-  console.log("loggin heder", isLoggedIn1)
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = localStorage.getItem("isLoggedIn")
+  // console.log("loggin heder", isLoggedIn1)
   const handleLogout = () => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("username");
     localStorage.removeItem("isLoggedIn");
-    setIsLoggedIn(false);
-    navigate("/");
+    // isLoggedIn(false);
+    navigate("/login");
   };
 
   return (
@@ -104,7 +104,7 @@ const Header = () => {
                   <AllpopModal/>
                 </Modal>
               </li>
-              {isLoggedIn1 ? (
+              {isLoggedIn ? (
                 <li className="nav-item">
                   <button
                     type="button"

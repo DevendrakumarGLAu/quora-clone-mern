@@ -120,7 +120,7 @@ function GetPostData() {
         </div>
       ))}
 <Modal open={openPost} onClose={onClosePost}>
-  {console.log("Selected post content:", selectedPostContent)}
+  {/* {console.log("Selected post content:", selectedPostContent)} */}
   <PostModalPopup postId={selectedPostId} editMode={true} content={selectedPostContent} />
 </Modal>
 

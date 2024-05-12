@@ -1,7 +1,7 @@
 // src/components/WithLoader.js
 
 import React, { useState } from 'react';
-import Loader from './Loader';
+// import Loader from './Loader';
 
 const WithLoader = (WrappedComponent) => {
   const WithLoader = (props) => {

@@ -14,6 +14,7 @@ import CreateSpace from "./components/space/CreateSpace/CreateSpace.js";
 import UserSpaceDetails from './components/space/userSpaceDetails/UserSpaceDetails.js';
 import PostModalPopup from './components/content/postbox1/Post/postModalPopUP.js';
 import Space from './components/space/space.js';
+import Loader from './components/loader/Loader.js';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -34,6 +35,7 @@ function App() {
             {/* <Route path="/quora" element={<Quora />} /> */}
             <Route path="/" element={<Quora />} />
             {/* <Route path="/sidebar" element={<Sidebar />} /> */}
+            {/* <Rou></Rou> */}
             <Route path="/answer" element={<PostAnswer />} />
             <Route path="/Space" element={<Space/>} />
             <Route path="/PostModalPopUP" element={<PostModalPopup/>}/>
@@ -41,6 +43,7 @@ function App() {
             <Route path="/UserSpaceDetails/:id" element={<UserSpaceDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          {/* < Loader/> */}
         </div>
       </Router>
     </AuthProvider>

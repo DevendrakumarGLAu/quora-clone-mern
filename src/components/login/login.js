@@ -25,17 +25,17 @@ const Login = () => {
             localStorage.setItem("token", token);
             localStorage.setItem("isLoggedIn", true);
             sessionStorage.setItem("username", username);
-            setIsLoggedIn(true);
-            console.log(isLoggedIn);
+            // setIsLoggedIn(true);
+            // console.log(isLoggedIn);
             navigate("/");
         } catch (error) {
             console.error(error.response.data.error);
             setError("Invalid username or password");
         }
     };
-    useEffect(() => {
-        console.log(isLoggedIn);
-    }, [isLoggedIn]);
+    // useEffect(() => {
+    //     console.log(isLoggedIn);
+    // }, [isLoggedIn]);
 
 
     return (

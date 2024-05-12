@@ -9,7 +9,7 @@ function CreateSpace() {
     try {
       // Make a POST request to the API endpoint
       const response = await fetch(
-        `process.env.REACT_APP_BACKEND_URL/api/spaces/createSpace`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/spaces/createSpace`,
         // "http://localhost:3001/api/spaces/createSpace",
         {
           method: "POST",

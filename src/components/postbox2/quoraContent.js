@@ -14,7 +14,8 @@ function QuoraContent() {
   const fetchQuestions = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3001/api/GetALLquestions/get-questions"
+        `${process.env.REACT_APP_BACKEND_URL}/api/GetALLquestions/get-questions`
+        // "http://localhost:3001/api/GetALLquestions/get-questions"
       );
       if (response.ok) {
         const data = await response.json();

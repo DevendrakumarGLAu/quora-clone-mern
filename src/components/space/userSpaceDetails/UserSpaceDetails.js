@@ -10,7 +10,8 @@ function UserSpaceDetails() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          'http://localhost:3001/api/getSpaces'
+          `${process.env.REACT_APP_BACKEND_URL}/api/getSpaces`
+          // 'http://localhost:3001/api/getSpaces'
         );
 
         if (!response.ok) {

@@ -8,6 +8,7 @@ function QAPostBox() {
    answerId: null,
    text: "",
  });
+ const PORT= process.env.REACT_APP_BACKEND_URL
 
   // const fetchQuestions = async () => {
   //   try {
@@ -31,7 +32,8 @@ function QAPostBox() {
   const getQuestionWithAnswer = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/answers/questions-with-answers`
+        `${PORT}/api/answers/questions-with-answers`
+        // `http://localhost:3001/api/answers/questions-with-answers`
       );
       if (response.ok) {
         const questionWithAnswers = await response.json();
@@ -83,7 +85,8 @@ function QAPostBox() {
   };const handleAnswerAction = async (answerId, action, additionalData) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/answers/AnswerActionCommentVotes/${answerId}`,
+        `${PORT}/api/answers/AnswerActionCommentVotes/${answerId}`,
+        // `http://localhost:3001/api/answers/AnswerActionCommentVotes/${answerId}`,
         {
           method: "POST",
           headers: {

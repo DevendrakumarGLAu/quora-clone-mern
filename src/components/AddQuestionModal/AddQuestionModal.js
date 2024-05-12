@@ -20,7 +20,8 @@ function AddQuestionModal() {
         return;
       }
       const response = await fetch(
-        "http://localhost:3001/api/questions/submit-question",
+        `${process.env.REACT_APP_BACKEND_URL}/api/questions/submit-question`,
+        // "http://localhost:3001/api/questions/submit-question",
         {
           method: "POST",
           headers: {

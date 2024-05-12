@@ -27,8 +27,9 @@ function PostModalPopup({ content = "", editMode = false, postId }) {
     let url, method, body;
 
     if (editMode) {
-      console.log("edit post id", postId);
-      url = `http://localhost:3001/api/posts/updatePost/${postId}`;
+      // console.log("edit post id", postId);
+      url =`${process.env.REACT_APP_BACKEND_URL}/api/posts/updatePost/${postId}`
+      // url = `http://localhost:3001/api/posts/updatePost/${postId}`;
       method = "PUT";
       body = {
         postId: postId,
@@ -36,7 +37,8 @@ function PostModalPopup({ content = "", editMode = false, postId }) {
         content: modalContent,
       };
     } else {
-       url = "http://localhost:3001/api/posts/postContent";
+      url = `${process.env.REACT_APP_BACKEND_URL}/api/posts/postContent`;
+      //  url = "http://localhost:3001/api/posts/postContent";
        method = "POST";
        body = {
         username,

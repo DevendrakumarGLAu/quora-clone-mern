@@ -11,11 +11,13 @@ function GetPostData() {
   const currentUser = sessionStorage.getItem("username");
   const [loading, setLoading] = useState(true);
   const Navigate = useNavigate();
+  const port = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/posts/GetAllPosts"
+          `${port}/api/posts/GetAllPosts`
+          // "http://localhost:3001/api/posts/GetAllPosts"
         );
         if (response.ok) {
           const data = await response.json();
@@ -64,7 +66,8 @@ function GetPostData() {
   const handleEdit = async (postId) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/posts/getPostById/${postId}`
+        `${port}/api/posts/getPostById/${postId}`
+        // `http://localhost:3001/api/posts/getPostById/${postId}`
       );
       if (response.ok) {
         const post = await response.json();
@@ -87,7 +90,8 @@ function GetPostData() {
     // console.log("Post ID:", postId);
     try {
       const response = await fetch(
-        `http://localhost:3001/api/posts/deletePost/${postId}`,
+        `${port}/api/posts/deletePost/${postId}`,
+        // `http://localhost:3001/api/posts/deletePost/${postId}`,
         {
           method: "DELETE",
         }

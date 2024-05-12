@@ -9,7 +9,8 @@ function GetUserSpace() {
   useEffect(() => {
 
     fetch(
-      "http://localhost:3001/api/spaces/getSpaces"
+      `${process.env.REACT_APP_BACKEND_URL}/api/spaces/getSpaces`
+      // "http://localhost:3001/api/spaces/getSpaces"
     )
       .then((response) => response.json())
       .then((data) => {

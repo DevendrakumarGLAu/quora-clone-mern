@@ -15,9 +15,12 @@ const Login = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogin = async () => {
+        const port = process.env.REACT_APP_BACKEND_URL;
+        console.log("login port",port);
         try {
             const response = await axios.post(
-                "http://localhost:3001/api/auth/login",
+                `${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
+                // "http://localhost:3001/api/auth/login",
                 { username, password, },
             );
             // console.log(response);

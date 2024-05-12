@@ -16,7 +16,8 @@ function PostAnswerPopUP({ question, questionId }) {
       }
 
       const response = await fetch(
-        `http://localhost:3001/api/answers/answer-question/${questionId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/answers/answer-question/${questionId}`,
+        // `http://localhost:3001/api/answers/answer-question/${questionId}`,
         {
           method: "POST",
           headers: {

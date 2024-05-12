@@ -8,7 +8,8 @@ function GetAllSpaces() {
     const fetchSpaces = async () => {
       try {
         const response = await fetch(
-          'http://localhost:3001/api/spaces/getSpaces'
+          `${process.env.REACT_APP_BACKEND_URL}/api/spaces/getSpaces`
+          // 'http://localhost:3001/api/spaces/getSpaces'
         );
 
         if (!response.ok) {

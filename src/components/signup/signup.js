@@ -17,7 +17,8 @@ const Signup = () => {
   const handleSignup = async () => {
     try {
       await axios.post(
-        "http://localhost:3001/api/auth/signup", 
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`,
+        // "http://localhost:3001/api/auth/signup", 
         {
         username,
         password,

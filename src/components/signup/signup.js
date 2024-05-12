@@ -43,8 +43,8 @@ const Signup = () => {
     <div className="container d-flex align-items-center justify-content-center vh-100 w-50">
       <div className="card p-4">
         <h2 className="text-center">Signup</h2>
-        <form>
-          <div className="mb-3">
+        <form className="row">
+          <div className="mb-3 col-md-6">
             <label htmlFor="username" className="form-label">
               Username:
             </label>
@@ -56,7 +56,7 @@ const Signup = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-3 col-md-6">
             <label htmlFor="password" className="form-label">
               Password:
             </label>
@@ -68,7 +68,7 @@ const Signup = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-3 col-md-6">
             <label htmlFor="qualifications" className="form-label">
               Qualifications:
             </label>
@@ -80,7 +80,7 @@ const Signup = () => {
               onChange={(e) => setQualifications(e.target.value)}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-3 col-md-6">
             <label htmlFor="Working" className="form-label">
               Working:
             </label>
@@ -92,7 +92,7 @@ const Signup = () => {
               onChange={(e) => setWorking(e.target.value)}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-3 col-md-6">
             <label htmlFor="Email" className="form-label">
               Email:
             </label>
@@ -104,7 +104,7 @@ const Signup = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-3 col-md-6">
             <label htmlFor="mobile" className="form-label">
               Mobile:
             </label>
@@ -115,6 +115,9 @@ const Signup = () => {
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
             />
+          </div>
+          <div className="mb-3 col-md-6">
+            
           </div>
           <button
             type="button"

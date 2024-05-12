@@ -12,11 +12,6 @@ function Content() {
         <div className="col-md-12"><GetPostData /></div>
         <div className="col-md-12"><QAPostBox /></div>
       </div>
-      
-      
-      {/* <div className="mt-4">
-        
-      </div> */}
     </div>
   );
 }

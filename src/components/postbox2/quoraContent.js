@@ -10,7 +10,7 @@ function QuoraContent() {
   const [username, setUsername] = useState(sessionStorage.getItem("username"));
   const [open, setOpen] = useState(false); 
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
-
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
   const fetchQuestions = async () => {
     try {
       const response = await fetch(

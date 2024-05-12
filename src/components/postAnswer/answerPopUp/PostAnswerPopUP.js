@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function PostAnswerPopUP({ question, questionId }) {
   const [answerText, setAnswerText] = useState("");
   const Navigate = useNavigate();
-
+  const isLoggedIn= sessionStorage.getItem("isLoggedIn")
   const handlePostAnswer = async () => {
     try {
       const username = sessionStorage.getItem("username");

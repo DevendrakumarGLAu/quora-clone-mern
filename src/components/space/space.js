@@ -8,10 +8,12 @@ import Sidebar from "../sidebar/Sidebar";
 import Widget from "../Widget/Widget";
 // import GetAllSpaces from "./GetAllSpaces";
 import GetUserSpace from "./GetUserSpace";
+import Login from "../login/login";
 
 
 
 function Space() {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
   return (
     <div>
       <div>
@@ -22,7 +24,8 @@ function Space() {
             </div> */}
             <div className="col-md-12 col-12">
             {/* <CreateSpace /> */}
-            <GetUserSpace/>
+            ({isLoggedIn ? <GetUserSpace /> :<Login />})
+            {/* <GetUserSpace/> */}
             </div>
             {/* <div className="col-md-2 d-none d-md-block">
               <Widget />

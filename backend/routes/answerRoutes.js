@@ -121,5 +121,17 @@ router.get("/GetQuestionWithAnswer/:questionId", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+router.get("/questions-with-answers", async (req, res) => {
+  try {
+    // Fetch all questions
+    const questions = await Question.find().populate("answers");
+    res.status(200).json(questions);
+  } catch (error) {
+    console.error("Error fetching questions with answers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+module.exports = router;
 
 module.exports = router;

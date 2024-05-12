@@ -28,6 +28,7 @@ function QuoraContent() {
   };
 
   const onOpenModal = (questionId) => {
+    // console.log("question ids",questionId);
     setSelectedQuestionId(questionId);
     setOpen(true);
   };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 function QAPostBox() {
   const [questions, setQuestions] = useState([]);
   const [questionsQA, setQuestionsQA] = useState([]);
@@ -9,62 +9,66 @@ function QAPostBox() {
    text: "",
  });
 
-  const fetchQuestions = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3001/api/questions/GetQuestionIds"
-      );
-      if (response.ok) {
-        const data = await response.json();
-        const questionIdsArray = Array.isArray(data)
-          ? data.map((question) => question.questionId)
-          : [data.questionIds];
-        setQuestions(questionIdsArray);
-      } else {
-        console.error("Error fetching questions:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error fetching questions:", error.message);
-    }
-  };
+  // const fetchQuestions = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:3001/api/questions/GetQuestionIds"
+  //     );
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       const questionIdsArray = Array.isArray(data)
+  //         ? data.map((question) => question.questionId)
+  //         : [data.questionIds];
+  //       setQuestions(questionIdsArray);
+  //     } else {
+  //       console.error("Error fetching questions:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching questions:", error.message);
+  //   }
+  // };
 
-  const getQuestionWithAnswer = async (questionId) => {
+  const getQuestionWithAnswer = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/answers/GetQuestionWithAnswer/${questionId}`
+        `http://localhost:3001/api/answers/questions-with-answers`
       );
       if (response.ok) {
         const questionWithAnswers = await response.json();
-        if (questionWithAnswers.answers.length > 0) {
-          setQuestionsQA((prevQuestions) => [
-            ...prevQuestions,
-            questionWithAnswers,
-          ]);
-        }
-      } else {
-        console.error(
-          "Error fetching question with answer:",
-          response.statusText
-        );
+        setQuestionsQA(questionWithAnswers);
+        // console.log("Question with answers:", questionWithAnswers); // Log the response
+      //   if (questionWithAnswers && questionWithAnswers.answers) { // Check if answers array exists
+      //     setQuestionsQA((prevQuestions) => [
+      //       ...prevQuestions,
+      //       questionWithAnswers,
+      //     ]);
+      //   }
+      // } else {
+      //   console.error(
+      //     "Error fetching question with answer:",
+      //     response.statusText
+      //   );
       }
     } catch (error) {
       console.error("Error fetching question with answer:", error.message);
     }
   };
+  
 
   
 
   useEffect(() => {
-    fetchQuestions();
+    // fetchQuestions();
+    getQuestionWithAnswer();
   }, []);
 
-  useEffect(() => {
-    questions.forEach((questionIds) => {
-      questionIds.forEach((questionId) => {
-        getQuestionWithAnswer(questionId);
-      });
-    });
-  }, [questions]);
+  // useEffect(() => {
+  //   questions.forEach((questionIds) => {
+  //     questionIds.forEach((questionId) => {
+  //       getQuestionWithAnswer(questionId);
+  //     });
+  //   });
+  // }, [questions]);
 
   const formatDateString = (dateString) => {
     const dateObject = new Date(dateString);
@@ -136,74 +140,38 @@ function QAPostBox() {
   };
 
   return (
-    <div className="card">
-      {questionsQA.map((questionaa, index) => (
-        <div key={index} className="question-container">
-          <div className="question-details mt-4">
-            <div className="d-flex flex-row mb-3">
-              <div className="p-2">
-                <h3 className="card-title">{questionaa.questionName}</h3>
-              </div>
-              <div className="p-2">
-                <p className="card-text text-danger">
-                  {formatDateString(questionaa.createdAt)}
-                </p>
-              </div>
-            </div>
-            {questionaa.answers.map((answer) => (
-              <div key={answer._id} className=" answer-container">
-                <div className="d-flex flex-row mb-3">
-                  <div className="p-2">
-                    <p className="card-text ">
-                      <small className="text-danger">
-                        Answered by: {answer.answeredBy}
-                      </small>
-                    </p>
-                  </div>
-                  <div className="p-2">
-                    <p className="card-text ">
-                      <small className="text-danger">
-                        Created at: {formatDateString(answer.createdAt)}
-                      </small>
-                    </p>
-                  </div>
-                </div>
-                <div className="d-flex flex-column mb-3">
-                  <div className="p-2">
-                    {" "}
-                    <p className="card-text ">{answer.answerText}</p>
-                  </div>
-                </div>
-
-                <div className="d-flex flex-row mb-1 ">
-                  <div className="p-2 border-upvotes">
-                    <p
-                      className="card-text"
-                      onClick={() => handleUpvote(answer._id)}
-                    >
-                      <i className="fa-regular fa-circle-up"></i>Upvotes.
-                      {answer.upvotes}
-                    </p>
-                  </div>
-                  <div className="p-2 downvotes">
-                    <p
-                      className="card-text"
-                      onClick={() => handleDownvote(answer._id)}
-                    >
-                      <i className="fa-regular fa-circle-down"></i>
-                      {answer.downvotes}
-                    </p>
-                  </div>
-                  <div className="p-2">
-                    <p
-                      className="card-text"
-                      onClick={() => handleComment(answer._id)}
-                    >
-                      <i className="fa-regular fa-comment"></i>
-                    </p>
-                  </div>
-                  {commentInput.isActive &&
-                    commentInput.answerId === answer._id && (
+    <div className=" mt-4">
+      {questionsQA.map((question, index) => (
+        <div key={index} className="card mb-3">
+          <div className="card-header">
+            <h5 className="card-title">{question.questionName}</h5>
+            <p className="card-text text-muted">Created at: {formatDateString(question.createdAt)}</p>
+          </div>
+          <div className="card-body">
+            {question.answers.length > 0 ? (
+              question.answers.map((answer) => (
+                <div key={answer._id} className="mb-3">
+                  <p className="card-text">Answer: {answer.answerText}</p>
+                  <p className="card-text text-muted">Answered by: {answer.answeredBy}</p>
+                  <p className="card-text text-muted">Created at: {formatDateString(answer.createdAt)}</p>
+                  {/* Additional UI elements */}
+                  <div className="d-flex flex-row mb-1 ">
+                    <div className="p-2 border-upvotes">
+                      <p className="card-text" onClick={() => handleUpvote(answer._id)}>
+                        <i className="fa-regular fa-circle-up"></i>Upvotes: {answer.upvotes}
+                      </p>
+                    </div>
+                    <div className="p-2 downvotes">
+                      <p className="card-text" onClick={() => handleDownvote(answer._id)}>
+                        <i className="fa-regular fa-circle-down"></i>Downvotes: {answer.downvotes}
+                      </p>
+                    </div>
+                    <div className="p-2">
+                      <p className="card-text" onClick={() => handleComment(answer._id)}>
+                        <i className="fa-regular fa-comment"></i> Comment
+                      </p>
+                    </div>
+                    {commentInput.isActive && commentInput.answerId === answer._id && (
                       <div>
                         <input
                           type="text"
@@ -215,38 +183,32 @@ function QAPostBox() {
                             })
                           }
                         />
-                        <button onClick={handleCommentSubmit}>
-                          Submit Comment
-                        </button>
+                        <button onClick={handleCommentSubmit}>Submit Comment</button>
                       </div>
                     )}
-
-                  <div className="p-2">
-                    <p
-                      className="card-text"
-                      onClick={() => handleShare(answer._id)}
-                    >
-                      <i className="fa-regular fa-share-from-square"></i>
-                      {answer.share}
-                    </p>
+                    <div className="p-2">
+                      <p className="card-text" onClick={() => handleShare(answer._id)}>
+                        <i className="fa-regular fa-share-from-square"></i> Share: {answer.share}
+                      </p>
+                    </div>
+                    <div className="p-2">
+                      <p className="card-text">
+                        <small className="text-muted">Last updated: {formatDateString(answer.updatedAt)}</small>
+                      </p>
+                    </div>
                   </div>
-                  <div className="p-2">
-                    <p className="card-text">
-                      <small className="text-muted">
-                        Last updated: {formatDateString(answer.updatedAt)}
-                      </small>
-                    </p>
-                  </div>
+                  <hr />
                 </div>
-
-                <hr />
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="card-text">No answers available <Link to="/answer">Answer</Link></p>
+            )}
           </div>
         </div>
       ))}
     </div>
   );
+  
 }
 
 export default QAPostBox;

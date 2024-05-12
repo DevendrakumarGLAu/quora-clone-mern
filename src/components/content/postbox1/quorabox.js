@@ -10,6 +10,7 @@ function Quorabox() {
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState(sessionStorage.getItem("username"));
   const navigate = useNavigate();
+const [openQuestion, setOpenQuestion] = useState(false);
 
   const onOpenModal = () => {
     if (username) {
@@ -21,9 +22,19 @@ function Quorabox() {
       }
     }
   };
+  const onOpenQuestion = () => {
+    if (username) {
+      setOpenQuestion(true);
+    } else {
+      const shouldLogin = window.confirm("Please login to Add Question. Do you want to proceed to login?");
+      if (shouldLogin) {
+        navigate("/login");
+      }
+    }
+  }
 
   const onCloseModal = () => setOpen(false);
-
+  const onCloseQuestion = () => setOpenQuestion(false);
   const answerNavigate = () => {
     if (username) {
       navigate("/answer");
@@ -46,15 +57,18 @@ function Quorabox() {
             type="text"
             className="form-control p-1"
             placeholder="What do you want to ask or share?"
-            onClick={onOpenModal}
+            onClick={onOpenQuestion}
           />
         </div>
       </div>
       <Modal open={open} onClose={onCloseModal} center>
         <PostModalPopUP />
       </Modal>
+      <Modal open={openQuestion} onClose={onCloseQuestion} center>
+      <AddQuestionModal onClose={onCloseQuestion} />
+    </Modal>
       <div className="card-footer d-flex justify-content-around">
-        <div className=" mr-auto border-end" onClick={onOpenModal}>
+        <div className=" mr-auto border-end" onClick={onOpenQuestion}>
           <span className="btn btn-success" role="button">
             <i className="far fa-circle"></i> Ask
           </span>

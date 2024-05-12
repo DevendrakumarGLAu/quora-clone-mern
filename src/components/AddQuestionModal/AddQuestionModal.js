@@ -34,7 +34,8 @@ function AddQuestionModal() {
       );
       if (response.ok) {
         console.log("Question submitted successfully");
-        window.location.reload();
+        // window.location.reload();
+        navigate("/answer");
       } else {
         console.error("Error submitting question:", response.statusText);
       }

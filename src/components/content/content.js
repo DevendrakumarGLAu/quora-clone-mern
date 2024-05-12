@@ -10,7 +10,7 @@ function Content() {
       <div className="row">
         <div className="col-md-12"><Quorabox /></div>
         <div className="col-md-12"><GetPostData /></div>
-        {/* <div className="col-md-12"><QAPostBox /></div> */}
+        <div className="col-md-12"><QAPostBox /></div>
       </div>
     </div>
   );

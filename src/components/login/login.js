@@ -30,6 +30,7 @@ const Login = () => {
             sessionStorage.setItem("username", username);
             // setIsLoggedIn(true);
             // console.log(isLoggedIn);
+            startSessionTimer();
             navigate("/");
         } catch (error) {
             console.error(error.response.data.error);
@@ -39,6 +40,19 @@ const Login = () => {
     // useEffect(() => {
     //     console.log(isLoggedIn);
     // }, [isLoggedIn]);
+
+    const startSessionTimer = () => {
+        const sessionTimeout = 30 * 1000; 
+        const timeoutId = setTimeout(() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("username");
+            navigate("/login");
+        }, sessionTimeout);
+        const resetTimer = () => clearTimeout(timeoutId);
+        document.addEventListener("mousemove", resetTimer);
+        document.addEventListener("keypress", resetTimer);
+    };
 
 
     return (

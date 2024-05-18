@@ -12,8 +12,8 @@ function Quora() {
     // <div classNameName='quora'>
     <div>
       <div>
-        <div className=" text-center m-4" >
-          <div className="row">
+        <div className="m-4" >
+          <div className="row ">
             <div className="col-md-2 d-none d-md-block">
               <Sidebar />
             </div>

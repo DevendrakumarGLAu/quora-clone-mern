@@ -3,17 +3,30 @@ import books from "../image/books.png";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function PostModalPopup({ content = "", editMode = false, postId }) {
   const [modalContent, setModalContent] = useState(content);
   const [image, setImage] = useState(null);
+  const [file, setFile] = useState();
   const Navigate = useNavigate();
   const handleFileSelect = (event) => {
     // Handle file selection logic here
   };
 
+  const upload=()=>{
+    axios.post("http://localhost:3001/api/posts/postContent", {
+      
+    })
+  }
  const postContent = async () => {
   try {
+    const token = localStorage.getItem('token'); 
+    console.log("token in post popup", token)
+    if (!token) {
+      Navigate("/login")
+      return;
+    }
     const username = sessionStorage.getItem("username");
     if (!username) {
       console.error("Username not found");
@@ -52,6 +65,7 @@ function PostModalPopup({ content = "", editMode = false, postId }) {
       method: method,
       headers: {
         "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     });
@@ -118,8 +132,9 @@ function PostModalPopup({ content = "", editMode = false, postId }) {
       <input
         type="file"
         accept="image/*"
-        onChange={(e) => handleFileSelect(e)}
+        onChange={(e) => handleFileSelect(e.target.files[0])}
       />
+      {/* <button className="btn btn-primary" onClick={upload}>upload</button> */}
       <div className="d-flex justify-content-end mt-5">
         <button type="button" className="btn btn-danger mt-3 mx-2" onClick={() => Navigate("/")}>
           Cancel

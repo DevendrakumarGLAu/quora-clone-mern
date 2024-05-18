@@ -32,10 +32,8 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login/>} />
             <Route path="/signup" element={<Signup />} />
-            {/* <Route path="/quora" element={<Quora />} /> */}
             <Route path="/" element={<Quora />} />
-            {/* <Route path="/sidebar" element={<Sidebar />} /> */}
-            {/* <Rou></Rou> */}
+            <Route path="/sidebar" element={<Sidebar />} />
             <Route path="/answer" element={<PostAnswer />} />
             <Route path="/Space" element={<Space/>} />
             <Route path="/PostModalPopUP" element={<PostModalPopup/>}/>
@@ -43,7 +41,6 @@ function App() {
             <Route path="/UserSpaceDetails/:id" element={<UserSpaceDetails />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          {/* < Loader/> */}
         </div>
       </Router>
     </AuthProvider>

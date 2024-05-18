@@ -158,6 +158,7 @@ function QAPostBox() {
                   <p className="card-text text-muted">Answered by: {answer.answeredBy}</p>
                   <p className="card-text text-muted">Created at: {formatDateString(answer.createdAt)}</p>
                   {/* Additional UI elements */}
+                  <hr />
                   <div className="d-flex flex-row mb-1 ">
                     <div className="p-2 border-upvotes">
                       <p className="card-text" onClick={() => handleUpvote(answer._id)}>
@@ -200,7 +201,7 @@ function QAPostBox() {
                       </p>
                     </div>
                   </div>
-                  <hr />
+                  
                 </div>
               ))
             ) : (

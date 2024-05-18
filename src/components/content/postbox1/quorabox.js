@@ -13,10 +13,12 @@ function Quorabox() {
 const [openQuestion, setOpenQuestion] = useState(false);
 
   const onOpenModal = () => {
-    if (username) {
+    const token = localStorage.getItem('token')
+    console.log("token in quorabox",token)
+    if (token) {
       setOpen(true);
     } else {
-      const shouldLogin = window.confirm("Please login to post content. Do you want to proceed to login?");
+      const shouldLogin = window.confirm("Token expire. Do you want to proceed to login?");
       if (shouldLogin) {
         navigate("/login");
       }
@@ -52,10 +54,10 @@ const [openQuestion, setOpenQuestion] = useState(false);
         <div className="p-1">
           <img src={books} alt="" style={{ width: "30px", height: "30px" }} />
         </div>
-        <div className="input-group mb-3">
+        <div className="input-group">
           <input
             type="text"
-            className="form-control p-1"
+            className="form-control"
             placeholder="What do you want to ask or share?"
             onClick={onOpenQuestion}
           />

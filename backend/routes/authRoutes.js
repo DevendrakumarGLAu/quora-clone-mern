@@ -58,7 +58,7 @@ router.use(session({
       maxAge: 3600000 // 1 hour (in milliseconds)
     }
   }));
-router.post(
+  router.post(
     '/login',
     [
         body('username').trim().isLength({ min: 3 }).withMessage('Username must be at least 3 characters'),
@@ -81,19 +81,16 @@ router.post(
             const token = jwt.sign(
                 { username: user.username, email: user.email },
                 jwtSecret,
-                { expiresIn: '1h' } // Optional: token expiry time
+                { expiresIn: '36000' }
             );
-            console.log(req.session);
-            req.session.username = user.username;
-            req.session.Email = user.email;
-            req.session.Qualifications = user.qualifications;
-            req.session.mobile= user.mobile;
-            req.session.Working = user.Working;
-            res.status(200).json({ message: 'Login successful','token': token });
+            // Return token along with other user details
+            res.status(200).json({ message: 'Login successful', token });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Internal server error' });
         }
     }
 );
+module.exports = router;
+
 module.exports = router;

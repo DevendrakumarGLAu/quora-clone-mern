@@ -2,9 +2,18 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/post");
-
+const authMiddleware = require('../middleware/authMiddleware');
+// const multer = require("multer");
 // Route to post content
-router.post("/postContent", async (req, res) => {
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "./uploads/images");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   },
+// })
+router.post("/postContent",authMiddleware, async (req, res) => {
   try {
     const { content, username } = req.body;
     const newPost = new Post({
@@ -86,5 +95,47 @@ router.put("/updatePost/:postId", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+router.post('/postComment/:postId', authMiddleware, async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const { comment, username } = req.body; // Extract comment and username from request body
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    post.comments.push({ comment, username }); // Push comment with username
+    await post.save();
+
+    res.status(200).json({ message: 'Comment added successfully' });
+  } catch (error) {
+    console.error('Error posting comment:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get("/getAllComments/:postId", async (req, res) => {
+  try {
+    const postId = req.params.postId;
+
+    // Find the post by postId
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    // Extract comments from the post
+    const comments = post.comments;
+
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 
 module.exports = router;

@@ -1,18 +1,5 @@
-// import { useNavigate } from "react-router-dom";
-
 const port = process.env.REACT_APP_BACKEND_URL;
-
 const token = localStorage.getItem('token');
-// const Navigate = useNavigate();
-
-// if (!token) {
-//     Navigate('/login');
-// }
-
-// export {
-//     port,
-//     Navigate
-// };
 
 export const getAllPosts = async () => {
   try {
@@ -87,4 +74,65 @@ export const postComment = async (postId, commentData) => {
     }
   };
 
-// Define other API functions as needed
+export const getCommentsByPostId = async (postId) => {
+  try{
+    const response= await fetch(`${port}/api/posts/getAllComments/${postId}`);
+    if(response.ok){
+      const comments = await response.json();
+      return comments;
+    }
+    else{
+      console.error('Error fetching comments:', response.statusText);
+      return null;
+    }
+  }
+  catch(error){
+    console.error('Error fetching comments:', error);
+    return null;
+  }
+}
+
+export const upvotePost = async (postId) => {
+  try {
+    const response = await fetch(`${port}/api/posts/upvote/${postId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (response.ok) {
+      console.log('Post upvoted successfully');
+      return true;
+    } else {
+      console.error('Error upvoting post:', response.statusText);
+      return false;
+    }
+  } catch (error) {
+    console.error('Error upvoting post:', error);
+    return false;
+  }
+};
+
+export const downvotePost = async (postId) => {
+  try {
+    const response = await fetch(`${port}/api/posts/downvote/${postId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (response.ok) {
+      console.log('Post downvoted successfully');
+      return true;
+    } else {
+      console.error('Error downvoting post:', response.statusText);
+      return false;
+    }
+  } catch (error) {
+    console.error('Error downvoting post:', error);
+    return false;
+  }
+};
+

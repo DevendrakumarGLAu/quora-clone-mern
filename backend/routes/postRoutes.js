@@ -119,20 +119,70 @@ router.post('/postComment/:postId', authMiddleware, async (req, res) => {
 router.get("/getAllComments/:postId", async (req, res) => {
   try {
     const postId = req.params.postId;
-
-    // Find the post by postId
     const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
-
-    // Extract comments from the post
     const comments = post.comments;
-
     res.status(200).json(comments);
   } catch (error) {
     console.error("Error fetching comments:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+router.post("/upvote/:postId", authMiddleware, async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const userId = req.user._id;
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    const userIndexInUpvotes = post.upvotes.indexOf(userId);
+    const userIndexInDownvotes = post.downvotes.indexOf(userId);
+    
+    if (userIndexInUpvotes === -1) {
+      post.upvotes.push(userId);
+    } else {
+      post.upvotes.splice(userIndexInUpvotes, 1);
+    }
+    if (userIndexInDownvotes !== -1) {
+      post.downvotes.splice(userIndexInDownvotes, 1);
+    }
+    
+    await post.save();
+    res.status(200).json({ message: 'Post upvoted successfully' });
+  } catch (error) {
+    console.error('Error upvoting post:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.post("/downvote/:postId", authMiddleware, async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const userId = req.user._id;
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    const userIndexInUpvotes = post.upvotes.indexOf(userId);
+    const userIndexInDownvotes = post.downvotes.indexOf(userId);
+    
+    if (userIndexInDownvotes === -1) {
+      post.downvotes.push(userId);
+    } else {
+      post.downvotes.splice(userIndexInDownvotes, 1);
+    }
+    if (userIndexInUpvotes !== -1) {
+      post.upvotes.splice(userIndexInUpvotes, 1);
+    }
+    
+    await post.save();
+    res.status(200).json({ message: 'Post downvoted successfully' });
+  } catch (error) {
+    console.error('Error downvoting post:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

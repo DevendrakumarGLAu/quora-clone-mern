@@ -4,7 +4,7 @@ import PostModalPopup from "../postModalPopUP";
 import Loader from "../../../../loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { Avatar, ListItemAvatar } from "@material-ui/core";
-import { getAllPosts, getPostByIdEdit, deletePost, postComment } from "../../../../../apiService";
+import { getAllPosts, getPostByIdEdit, deletePost, postComment, getCommentsByPostId } from "../../../../../apiService";
 import './GetPostData.css'
 function GetPostData() {
   const [posts, setPosts] = useState([]);
@@ -13,6 +13,7 @@ function GetPostData() {
   const [selectedPostContent, setSelectedPostContent] = useState("");
   const currentUser = sessionStorage.getItem("username");
   const [loading, setLoading] = useState(true);
+  const [postComments, setPostComments] = useState({});
   const [loadingComment, setLoadingComment] = useState(true);
   const Navigate = useNavigate();
   const port = process.env.REACT_APP_BACKEND_URL;
@@ -48,11 +49,23 @@ function GetPostData() {
   // }, []);
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllPosts();
-      if (data) {
-        setPosts(data);
-        setLoading(false);
+      try {
+        const data = await getAllPosts();
+        if (data) {
+          setPosts(data);
+          setLoading(false);
+          const comments = {};
+          for (const post of data) {
+            const commentsData = await getCommentsByPostId(post._id);
+            comments[post._id] = commentsData || [];
+          }
+          setPostComments(comments);
+        }
       }
+      catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+
     };
     fetchData();
   }, []);
@@ -179,21 +192,20 @@ function GetPostData() {
     setOpenPost(false);
   };
   const handleToggleCommentInput = (postId) => {
-    const token= localStorage.getItem('token')
-    if(!token){
+    const token = localStorage.getItem('token')
+    if (!token) {
       const answer = window.confirm("You are not logged in! Please login first for comment")
-      if(answer){
+      if (answer) {
         Navigate("/login")
       }
-      
     }
-    else{
-      console.log("post cid commnet", postId)
-    setShowCommentInput({ ...showCommentInput, [postId]: !showCommentInput[postId] });
-    setLoadingComment({ ...loadingComment, [postId]: true });
-    setTimeout(() => {
-      setLoadingComment({ ...loadingComment, [postId]: false });
-    }, 1000);
+    else {
+      // console.log("post cid commnet", postId)
+      setShowCommentInput({ ...showCommentInput, [postId]: !showCommentInput[postId] });
+      setLoadingComment({ ...loadingComment, [postId]: true });
+      setTimeout(() => {
+        setLoadingComment({ ...loadingComment, [postId]: false });
+      }, 1000);
     }
   };
 
@@ -205,9 +217,9 @@ function GetPostData() {
         if (updatedPost) {
           setPosts(posts.map(post => post._id === postId ? updatedPost : post));
         }
-        const answer= window.confirm('Comment posted successfully. Do you want to go to the home page?')
+        const answer = window.confirm('Comment posted successfully. Do you want to go to the home page?')
         if (answer) {
-          window.location.reload(); 
+          window.location.reload();
         }
 
       } else {
@@ -217,6 +229,23 @@ function GetPostData() {
       console.error('Error posting comment:', error);
     }
   };
+
+  // useEffect(() => {
+  //   const fetchComments = async () => {
+  //     try {
+  //       const fetchedComments = await getCommentsByPostId(selectedPostId);
+  //       console.log("fteched comments",fetchedComments)
+  //       if(fetchedComments){
+  //         setComments(fetchedComments);
+  //       } else{
+  //         console.log("Error fetching comments")
+  //       }
+  //     }
+  //     catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
 
 
   return (
@@ -314,8 +343,9 @@ function GetPostData() {
                     </div>
                     <div className="col-md-2">
                       <p className="card-text" onClick={() => handleToggleCommentInput(post._id)}>
-                        <i className="fa-regular fa-comment"></i> Comment: 0
+                        <i className="fa-regular fa-comment"></i> Comment: {postComments[post._id]?.length || 0}
                       </p>
+
                     </div>
                     <div className="col-md-2">
                       <p className="card-text" >
@@ -323,31 +353,11 @@ function GetPostData() {
                       </p>
                     </div>
                   </div>
-                  {/* <div className="row d-flex justify-content-end">
-                    <div className="col-md-6 ">
-                      {post.username === currentUser && (
-                        <button
-                          className="btn btn-primary float-right mt-2 mb-2"
-                          onClick={() => handleEdit(post._id)}
-                        >
-                          Edit
-                        </button>
-
-                      )}
-                    </div>
-                    <div className="col-md-6">
-                      {post.username === currentUser && (
-                        <button className="btn btn-danger float-right mt-2 mb-2" onClick={() => handleDelete(post._id)}>Delete</button>
-                      )}
-                    </div>
-
-                  </div> */}
                 </div>
               </div>
             </div>
             {showCommentInput[post._id] && (
               <div>
-                {/* Display loading spinner while loading */}
                 {loadingComment[post._id] ? (
                   <div className="row mt-2">
                     <div className="col-md-12 text-center">
@@ -356,17 +366,59 @@ function GetPostData() {
                       </div>
                     </div>
                   </div>
-
                 ) : (
-                  <div className="input-group mt-2 mb-3">
-                    <span className="input-group-text" id="inputGroup-sizing-default">Comment</span>
-                    <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter your comment" value={comment} onChange={(e) => setComment(e.target.value)} />
-                    <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={() => handlePostComment(post._id)}>Button</button>
+                  <div>
+                    <div className="input-group mt-2 mb-3">
+                      <span className="input-group-text" id="inputGroup-sizing-default">Comment</span>
+                      <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter your comment" value={comment} onChange={(e) => setComment(e.target.value)} />
+                      <button className="btn btn-outline-primary" type="button" id="button-addon2" onClick={() => handlePostComment(post._id)}>Button</button>
+                    </div>
+                    {postComments[post._id]?.length > 0 ? (
+                      <div className="card" style={{ height: '100px', overflowX: 'hidden', overflowY: 'auto' }}>
+                        <div className="comment-box">
+                          <div className="comment-list">
+                            {postComments[post._id]?.map((comment, index) => (
+                              <div key={index} className="post-comments">
+                                <div key={index} className="comment">
+                                  <div className="row">
+                                    <div className="col-md-1">
+                                      <img src={comment.profilePicture} alt="profile" style={{ height: '30px', width: '30px', borderRadius: '50%' }} />
+                                    </div>
+                                    <div className="col-md-7">
+                                      <div className="row">
+                                        <div className="col-md-12">
+                                          <h5>{comment.username}</h5>
+                                        </div>
+                                        <div className="col-md-12 text-danger">
+                                          {formatDateTime(comment.createdAt)}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="row">
+                                    <div className="col-md-1"></div>
+                                    <div className="col-md-10">
+                                      <p>{comment.comment}</p>
+                                    </div>
+                                  </div>
+                                  <hr></hr>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="card" style={{ height: '100px', width: '100%' }}>
+                        <div className="comment-box">
+                          <h2>No Comments Available</h2>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
             )}
-
           </div>
         ))
       )}

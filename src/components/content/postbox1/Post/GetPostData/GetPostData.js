@@ -4,7 +4,7 @@ import PostModalPopup from "../postModalPopUP";
 import Loader from "../../../../loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { Avatar, ListItemAvatar } from "@material-ui/core";
-import { getAllPosts, getPostByIdEdit, deletePost, postComment, getCommentsByPostId } from "../../../../../apiService";
+import { getAllPosts, getPostByIdEdit, deletePost, postComment, getCommentsByPostId,upvotePost,downvotePost } from "../../../../../apiService";
 import './GetPostData.css'
 function GetPostData() {
   const [posts, setPosts] = useState([]);
@@ -124,8 +124,8 @@ function GetPostData() {
   // };
   const handleEdit = async (postId) => {
     try {
-      setLoading(true); // Set loading state to true while editing
-      const post = await getPostByIdEdit(postId); // Pass postId to getPostByIdEdit
+      setLoading(true);
+      const post = await getPostByIdEdit(postId); 
       if (post) {
         setOpenPost(true);
         setSelectedPostId(postId);
@@ -138,12 +138,12 @@ function GetPostData() {
     } catch (error) {
       console.error("Error editing post:", error);
     } finally {
-      setLoading(false); // Set loading state to false after editing
+      setLoading(false);
     }
   };
   const handleDelete = async (postId) => {
     try {
-      setLoading(true); // Set loading state to true while deleting
+      setLoading(true);
       const success = await deletePost(postId);
       if (success) {
         setPosts(posts.filter((post) => post._id !== postId));
@@ -155,7 +155,7 @@ function GetPostData() {
     } catch (error) {
       console.error("Error deleting post:", error);
     } finally {
-      setLoading(false); // Set loading state to false after deleting
+      setLoading(false); 
     }
   };
 
@@ -200,7 +200,6 @@ function GetPostData() {
       }
     }
     else {
-      // console.log("post cid commnet", postId)
       setShowCommentInput({ ...showCommentInput, [postId]: !showCommentInput[postId] });
       setLoadingComment({ ...loadingComment, [postId]: true });
       setTimeout(() => {
@@ -211,7 +210,7 @@ function GetPostData() {
 
   const handlePostComment = async (postId) => {
     try {
-      const success = await postComment(postId, { comment, username: currentUser }); // Pass comment and username
+      const success = await postComment(postId, { comment, username: currentUser });
       if (success) {
         const updatedPost = await getPostByIdEdit(postId);
         if (updatedPost) {
@@ -229,23 +228,33 @@ function GetPostData() {
       console.error('Error posting comment:', error);
     }
   };
-
-  // useEffect(() => {
-  //   const fetchComments = async () => {
-  //     try {
-  //       const fetchedComments = await getCommentsByPostId(selectedPostId);
-  //       console.log("fteched comments",fetchedComments)
-  //       if(fetchedComments){
-  //         setComments(fetchedComments);
-  //       } else{
-  //         console.log("Error fetching comments")
-  //       }
-  //     }
-  //     catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
+  const handleDownvote = async (postId) => {
+    try {
+      const success = await downvotePost(postId);
+      if (success) {
+        console.log('response', success);
+        console.log('Post downvoted successfully');
+        window.location.reload();
+      }
+       else {
+        console.error('Failed to downvote post');
+      }
+    } catch (error) {
+      console.error('Error downvoting post:', error);
+    }
+  };
+  const handleUpvote = async (postId) => {
+    try {
+      const success = await upvotePost(postId); 
+      if (success) {
+        console.log('Post upvoted successfully');
+      } else {
+        console.error('Failed to upvote post');
+      }
+    } catch (error) {
+      console.error('Error upvoting post:', error);
+    }
+  };
 
 
   return (
@@ -319,7 +328,8 @@ function GetPostData() {
                   </div>
                   <hr></hr>
                   <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-1"></div>
+                    <div className="col-md-10">
                       <div dangerouslySetInnerHTML={{ __html: post.content }} />
                     </div>
                   </div>
@@ -327,13 +337,13 @@ function GetPostData() {
 
                   <div className="row">
                     <div className="col-md-2">
-                      <p className="card-text" >
-                        <i className="fa-regular fa-circle-up"></i> Upvotes: 0
+                      <p className="card-text" onClick={() => handleUpvote(post._id)}>
+                        <i className="fa-regular fa-circle-up"></i> Upvotes: {post.upvotes.length}
                       </p>
                     </div>
                     <div className="col-md-2">
-                      <p className="card-text" >
-                        <i className="fa-regular fa-circle-down"></i> Downvotes: 0
+                      <p className="card-text"  onClick={() => handleDownvote(post._id)}>
+                        <i className="fa-regular fa-circle-down"></i> Downvotes: {post.downvotes.length}
                       </p>
                     </div>
                     <div className="col-md-2">

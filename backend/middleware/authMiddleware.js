@@ -1,27 +1,29 @@
-// backend/middleware/authMiddleware.js
-
-
-const jwt = require('jsonwebtoken');
 const secretKey = 'DevendraKumarSinghGlau'; // Replace with your actual secret key
+const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
-  // Get token from request headers
-  console.log('Middleware executed');
-  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-  console.log("token",token)
-  if (!token) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
   try {
-    // Verify token
-    const decoded = jwt.verify(token, secretKey);
-    req.user = decoded; // Attach user data to request object
-    next(); // Proceed to the next middleware
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+    console.log('Token:', token); // Log the token for debugging
+    if (!token) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    jwt.verify(token, secretKey, (err, decoded) => {
+      if (err) {
+        if (err.name === 'TokenExpiredError') {
+          return res.status(401).json({ error: 'Token expired' });
+        } else {
+          return res.status(401).json({ error: 'Unauthorized' });
+        }
+      }
+      req.user = decoded; 
+      next(); 
+    });
   } catch (error) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    console.error('Error in authMiddleware:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 module.exports = authMiddleware;
-

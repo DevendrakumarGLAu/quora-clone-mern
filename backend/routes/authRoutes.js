@@ -16,7 +16,7 @@ router.post(
         body('mobile').isMobilePhone().withMessage('Please enter a valid mobile number'),
     ],
     async (req, res) => {
-        console.log('Received signup request');
+        // console.log('Received signup request');
 
         try {
             const errors = validationResult(req);
@@ -25,20 +25,25 @@ router.post(
             }
             // const { Email, password,mobile } = req.body;
             const {
-              username,
-              password,
-              Qualifications,
-              Working,
-              Email,
-              mobile,
+                username,
+                password,
+                Qualifications,
+                Working,
+                Email,
+                mobile,
             } = req.body;
             const existingEmail = await User.findOne({ Email });
-             const existingMobile = await User.findOne({ mobile });
+            const existingMobile = await User.findOne({ mobile });
+            const lowercaseUsername = username.toLowerCase();
+            const userInDb = await User.findOne({ username: { $regex: new RegExp(`^${lowercaseUsername}$`, 'i') } });
+            if (userInDb) {
+                return res.status(400).json({ error: "Username already exists" });
+            }
             if (existingEmail) {
-              return res.status(400).json({ error: "Email already exists" });
+                return res.status(400).json({ error: "Email already exists" });
             }
             if (existingMobile) {
-              return res.status(400).json({ error: "Mobile number already exists" });
+                return res.status(400).json({ error: "Mobile number already exists" });
             }
             const newUser = new User({ username, password, Qualifications, Working, Email, mobile });
             await newUser.save();
@@ -55,10 +60,10 @@ router.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 3600000 // 1 hour (in milliseconds)
+        maxAge: 3600000 // 1 hour (in milliseconds)
     }
-  }));
-  router.post(
+}));
+router.post(
     '/login',
     [
         body('username').trim().isLength({ min: 3 }).withMessage('Username must be at least 3 characters'),
@@ -81,7 +86,7 @@ router.use(session({
             const token = jwt.sign(
                 { username: user.username, email: user.email },
                 jwtSecret,
-                { expiresIn: '36000' }
+                { expiresIn: '3600000' }
             );
             // Return token along with other user details
             res.status(200).json({ message: 'Login successful', token });

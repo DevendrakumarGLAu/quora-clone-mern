@@ -42,7 +42,7 @@ const Login = () => {
     // }, [isLoggedIn]);
 
     const startSessionTimer = () => {
-        const sessionTimeout = 30 * 1000; 
+        const sessionTimeout = 30 *60* 1000; 
         const timeoutId = setTimeout(() => {
             localStorage.removeItem("token");
             localStorage.removeItem("isLoggedIn");

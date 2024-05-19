@@ -8,6 +8,7 @@ const session = require("express-session");
 const answerRoutes = require("./routes/answerRoutes");
 const postRoutes= require("./routes/postRoutes")
 const spaceRoutes = require("./routes/spaceRoutes");
+const notificationRoutes = require("./routes/notification");
 require('dotenv').config();
 // const searchRoutes = require("./routes/searchRoutes");
 console.log(process.env);
@@ -32,8 +33,7 @@ app.use("/api/answers", answerRoutes);
 app.use("/api/GetALLquestions", questionRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/spaces", spaceRoutes);
-// app.use("/api", searchRoutes);
-// app.use("/api/posts/GetAllPosts", postRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

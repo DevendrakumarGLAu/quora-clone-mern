@@ -70,7 +70,7 @@ const Header = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="#" className="nav-link">
+                <Link to="/notifications" className="nav-link">
                   Notifications
                 </Link>
               </li>

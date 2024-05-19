@@ -15,6 +15,7 @@ import UserSpaceDetails from './components/space/userSpaceDetails/UserSpaceDetai
 import PostModalPopup from './components/content/postbox1/Post/postModalPopUP.js';
 import Space from './components/space/space.js';
 import Loader from './components/loader/Loader.js';
+import Notification from './components/Notification/Notification.js';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/PostModalPopUP" element={<PostModalPopup/>}/>
             <Route path="/createSpace" element={<CreateSpace />} />
             <Route path="/UserSpaceDetails/:id" element={<UserSpaceDetails />} />
+            <Route path="/notifications" element={<Notification />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

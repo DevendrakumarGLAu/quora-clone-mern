@@ -26,6 +26,7 @@ const Login = () => {
             // console.log(response);
             const token = response.data.token;
             localStorage.setItem("token", token);
+            localStorage.setItem("userId", response.data.userId);
             localStorage.setItem("isLoggedIn", true);
             sessionStorage.setItem("username", username);
             // setIsLoggedIn(true);
@@ -45,6 +46,7 @@ const Login = () => {
         const sessionTimeout = 30 *60* 1000; 
         const timeoutId = setTimeout(() => {
             localStorage.removeItem("token");
+            localStorage.removeItem("userId");
             localStorage.removeItem("isLoggedIn");
             sessionStorage.removeItem("username");
             navigate("/login");

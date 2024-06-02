@@ -232,8 +232,9 @@ function GetPostData() {
     try {
       const success = await downvotePost(postId);
       if (success) {
-        console.log('response', success);
-        console.log('Post downvoted successfully');
+        // console.log('response', success);
+        // console.log('Post downvoted successfully');
+        
         window.location.reload();
       }
        else {
@@ -248,6 +249,7 @@ function GetPostData() {
       const success = await upvotePost(postId); 
       if (success) {
         console.log('Post upvoted successfully');
+        window.location.reload();
       } else {
         console.error('Failed to upvote post');
       }

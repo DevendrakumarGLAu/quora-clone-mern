@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 function QAPostBox() {
   const [questions, setQuestions] = useState([]);
   const [questionsQA, setQuestionsQA] = useState([]);
- const [commentInput, setCommentInput] = useState({
-   isActive: false,
-   answerId: null,
-   text: "",
- });
- const PORT= process.env.REACT_APP_BACKEND_URL
+  const [commentInput, setCommentInput] = useState({
+    isActive: false,
+    answerId: null,
+    text: "",
+  });
+  const PORT = process.env.REACT_APP_BACKEND_URL
 
   // const fetchQuestions = async () => {
   //   try {
@@ -39,25 +39,25 @@ function QAPostBox() {
         const questionWithAnswers = await response.json();
         setQuestionsQA(questionWithAnswers);
         // console.log("Question with answers:", questionWithAnswers); // Log the response
-      //   if (questionWithAnswers && questionWithAnswers.answers) { // Check if answers array exists
-      //     setQuestionsQA((prevQuestions) => [
-      //       ...prevQuestions,
-      //       questionWithAnswers,
-      //     ]);
-      //   }
-      // } else {
-      //   console.error(
-      //     "Error fetching question with answer:",
-      //     response.statusText
-      //   );
+        //   if (questionWithAnswers && questionWithAnswers.answers) { // Check if answers array exists
+        //     setQuestionsQA((prevQuestions) => [
+        //       ...prevQuestions,
+        //       questionWithAnswers,
+        //     ]);
+        //   }
+        // } else {
+        //   console.error(
+        //     "Error fetching question with answer:",
+        //     response.statusText
+        //   );
       }
     } catch (error) {
       console.error("Error fetching question with answer:", error.message);
     }
   };
-  
 
-  
+
+
 
   useEffect(() => {
     // fetchQuestions();
@@ -82,7 +82,7 @@ function QAPostBox() {
       minute: "numeric",
       hour12: true,
     });
-  };const handleAnswerAction = async (answerId, action, additionalData) => {
+  }; const handleAnswerAction = async (answerId, action, additionalData) => {
     try {
       const response = await fetch(
         `${PORT}/api/answers/AnswerActionCommentVotes/${answerId}`,
@@ -116,7 +116,7 @@ function QAPostBox() {
     await handleAnswerAction(answerId, "downvote");
   };
 
-  
+
 
   const handleShare = async (answerId) => {
     const shareType = prompt("Enter share type (public/private):");
@@ -136,7 +136,6 @@ function QAPostBox() {
   const handleCommentSubmit = async () => {
     const { answerId, text } = commentInput;
     if (text) {
-      // Perform your comment submission logic here
       console.log(`Comment submitted for answerId ${answerId}: ${text}`);
       setCommentInput({ answerId: null, text: "", isActive: false });
     }
@@ -154,10 +153,23 @@ function QAPostBox() {
             {question.answers.length > 0 ? (
               question.answers.map((answer) => (
                 <div key={answer._id} className="mb-3">
-                  <p className="card-text">Answer: {answer.answerText}</p>
-                  <p className="card-text text-muted">Answered by: {answer.answeredBy}</p>
-                  <p className="card-text text-muted">Created at: {formatDateString(answer.createdAt)}</p>
-                  {/* Additional UI elements */}
+                  <div className="row">
+                    <div className="col-md-1">
+                      <img src="https://via.placeholder.com/50" alt="avatar" style={{ width: "50px", height: "50px", borderRadius: "50%" }} />
+                    </div>
+
+                    <div className="col-md-6">
+                      <div className="row">
+                        <div className="col-md-12"><h5 className="card-text text-muted">Answered by: {answer.answeredBy}</h5></div>
+                        <div className="col-md-12 mb-3">
+                          <p className="card-text text-muted">{formatDateString(answer.createdAt)}</p>
+                        </div>
+                        <div>
+                          <p className="card-text">{answer.answerText}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <hr />
                   <div className="d-flex flex-row mb-1 ">
                     <div className="p-2 border-upvotes">
@@ -201,7 +213,7 @@ function QAPostBox() {
                       </p>
                     </div>
                   </div>
-                  
+
                 </div>
               ))
             ) : (
@@ -212,7 +224,7 @@ function QAPostBox() {
       ))}
     </div>
   );
-  
+
 }
 
 export default QAPostBox;
